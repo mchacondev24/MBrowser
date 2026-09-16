@@ -5,16 +5,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/aero_bg_dark"
+    android:fitsSystemWindows="false"
     tools:context=".MainActivity">
 
-    <!-- Top Glass Toolbar Container -->
+    <!-- Top Glass Toolbar Container (Insets handled in MainActivity) -->
     <LinearLayout
         android:id="@+id/topToolbarContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:orientation="vertical"
-        android:padding="8dp"
+        android:paddingHorizontal="10dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
         android:background="@drawable/bg_glass_bar"
         android:elevation="8dp">
 
@@ -31,15 +34,15 @@
                 android:orientation="horizontal"
                 android:gravity="center_vertical">
 
-                <!-- IngeHub launcher -->
+                <!-- Home / Speed Dial launcher -->
                 <LinearLayout
-                    android:id="@+id/btnIngeHub"
+                    android:id="@+id/btnHomeSpeedDial"
                     android:layout_width="wrap_content"
-                    android:layout_height="28dp"
+                    android:layout_height="30dp"
                     android:orientation="horizontal"
                     android:gravity="center_vertical"
-                    android:paddingHorizontal="8dp"
-                    android:layout_marginEnd="5dp"
+                    android:paddingHorizontal="9dp"
+                    android:layout_marginEnd="6dp"
                     android:background="@drawable/bg_aqua_pill"
                     android:clickable="true"
                     android:focusable="true">
@@ -53,9 +56,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="4dp"
-                        android:text="IngeHub"
+                        android:text="Inicio"
                         android:textColor="@color/aqua_cyan"
-                        android:textSize="11sp"
+                        android:textSize="12sp"
                         android:textStyle="bold" />
                 </LinearLayout>
 
@@ -63,11 +66,11 @@
                 <LinearLayout
                     android:id="@+id/btnOfficeModule"
                     android:layout_width="wrap_content"
-                    android:layout_height="28dp"
+                    android:layout_height="30dp"
                     android:orientation="horizontal"
                     android:gravity="center_vertical"
-                    android:paddingHorizontal="8dp"
-                    android:layout_marginEnd="5dp"
+                    android:paddingHorizontal="9dp"
+                    android:layout_marginEnd="6dp"
                     android:background="@drawable/bg_aqua_button"
                     android:clickable="true"
                     android:focusable="true">
@@ -82,9 +85,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="4dp"
-                        android:text="Office"
+                        android:text="Office AI"
                         android:textColor="@color/text_primary"
-                        android:textSize="11sp"
+                        android:textSize="12sp"
                         android:textStyle="bold" />
                 </LinearLayout>
 
@@ -92,11 +95,11 @@
                 <LinearLayout
                     android:id="@+id/btnServerModule"
                     android:layout_width="wrap_content"
-                    android:layout_height="28dp"
+                    android:layout_height="30dp"
                     android:orientation="horizontal"
                     android:gravity="center_vertical"
-                    android:paddingHorizontal="8dp"
-                    android:layout_marginEnd="5dp"
+                    android:paddingHorizontal="9dp"
+                    android:layout_marginEnd="6dp"
                     android:background="@drawable/bg_game_badge"
                     android:clickable="true"
                     android:focusable="true">
@@ -111,9 +114,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="4dp"
-                        android:text="Servidor"
+                        android:text="Servidor LAN"
                         android:textColor="@color/text_primary"
-                        android:textSize="11sp"
+                        android:textSize="12sp"
                         android:textStyle="bold" />
                 </LinearLayout>
 
@@ -121,11 +124,11 @@
                 <LinearLayout
                     android:id="@+id/btnCloudDriveModule"
                     android:layout_width="wrap_content"
-                    android:layout_height="28dp"
+                    android:layout_height="30dp"
                     android:orientation="horizontal"
                     android:gravity="center_vertical"
-                    android:paddingHorizontal="8dp"
-                    android:layout_marginEnd="5dp"
+                    android:paddingHorizontal="9dp"
+                    android:layout_marginEnd="6dp"
                     android:background="@drawable/bg_aqua_pill"
                     android:clickable="true"
                     android:focusable="true">
@@ -142,7 +145,7 @@
                         android:layout_marginStart="4dp"
                         android:text="Drive"
                         android:textColor="@color/aqua_cyan"
-                        android:textSize="11sp"
+                        android:textSize="12sp"
                         android:textStyle="bold" />
                 </LinearLayout>
 
@@ -150,11 +153,11 @@
                 <LinearLayout
                     android:id="@+id/btnSuperVelozToggle"
                     android:layout_width="wrap_content"
-                    android:layout_height="28dp"
+                    android:layout_height="30dp"
                     android:orientation="horizontal"
                     android:gravity="center_vertical"
-                    android:paddingHorizontal="8dp"
-                    android:layout_marginEnd="5dp"
+                    android:paddingHorizontal="9dp"
+                    android:layout_marginEnd="6dp"
                     android:background="@drawable/bg_turbo_badge"
                     android:clickable="true"
                     android:focusable="true">
@@ -172,7 +175,7 @@
                         android:layout_marginStart="4dp"
                         android:text="Turbo"
                         android:textColor="@color/text_primary"
-                        android:textSize="11sp"
+                        android:textSize="12sp"
                         android:textStyle="bold" />
                 </LinearLayout>
 
@@ -180,11 +183,11 @@
                 <LinearLayout
                     android:id="@+id/btnGameBoostToggle"
                     android:layout_width="wrap_content"
-                    android:layout_height="28dp"
+                    android:layout_height="30dp"
                     android:orientation="horizontal"
                     android:gravity="center_vertical"
-                    android:paddingHorizontal="8dp"
-                    android:layout_marginEnd="5dp"
+                    android:paddingHorizontal="9dp"
+                    android:layout_marginEnd="6dp"
                     android:background="@drawable/bg_game_badge"
                     android:clickable="true"
                     android:focusable="true">
@@ -202,7 +205,7 @@
                         android:layout_marginStart="4dp"
                         android:text="Gaming"
                         android:textColor="@color/text_primary"
-                        android:textSize="11sp"
+                        android:textSize="12sp"
                         android:textStyle="bold" />
                 </LinearLayout>
 
@@ -210,10 +213,10 @@
                 <LinearLayout
                     android:id="@+id/btnDevToolsToggle"
                     android:layout_width="wrap_content"
-                    android:layout_height="28dp"
+                    android:layout_height="30dp"
                     android:orientation="horizontal"
                     android:gravity="center_vertical"
-                    android:paddingHorizontal="8dp"
+                    android:paddingHorizontal="9dp"
                     android:background="@drawable/bg_dev_badge"
                     android:clickable="true"
                     android:focusable="true">
@@ -231,7 +234,7 @@
                         android:layout_marginStart="4dp"
                         android:text="Dev"
                         android:textColor="@color/text_primary"
-                        android:textSize="11sp"
+                        android:textSize="12sp"
                         android:textStyle="bold" />
                 </LinearLayout>
             </LinearLayout>
@@ -377,15 +380,17 @@
         android:visibility="gone"
         android:elevation="20dp" />
 
-    <!-- Bottom Floating Glass Navigation Bar -->
+    <!-- Bottom Floating Glass Navigation Bar (Insets handled in MainActivity) -->
     <LinearLayout
         android:id="@+id/bottomToolbarContainer"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:orientation="horizontal"
         android:gravity="center_vertical"
         android:paddingHorizontal="16dp"
+        android:paddingTop="6dp"
+        android:paddingBottom="6dp"
         android:background="@drawable/bg_glass_bar"
         android:elevation="8dp">
 
@@ -393,7 +398,7 @@
         <ImageButton
             android:id="@+id/btnNavBack"
             android:layout_width="0dp"
-            android:layout_height="40dp"
+            android:layout_height="44dp"
             android:layout_weight="1"
             android:background="@drawable/bg_icon_button"
             android:src="@drawable/ic_arrow_back"
@@ -404,18 +409,18 @@
         <ImageButton
             android:id="@+id/btnNavForward"
             android:layout_width="0dp"
-            android:layout_height="40dp"
+            android:layout_height="44dp"
             android:layout_weight="1"
             android:background="@drawable/bg_icon_button"
             android:src="@drawable/ic_arrow_forward"
             android:tint="@color/text_primary"
             android:contentDescription="@string/btn_forward" />
 
-        <!-- Home Button (Loads Maxwell Chacon portfolio) -->
+        <!-- Home Button (Loads Speed Dial Start Page) -->
         <ImageButton
             android:id="@+id/btnNavHome"
             android:layout_width="0dp"
-            android:layout_height="40dp"
+            android:layout_height="44dp"
             android:layout_weight="1"
             android:background="@drawable/bg_icon_button"
             android:src="@drawable/ic_home"
@@ -426,7 +431,7 @@
         <ImageButton
             android:id="@+id/btnHardReload"
             android:layout_width="0dp"
-            android:layout_height="40dp"
+            android:layout_height="44dp"
             android:layout_weight="1"
             android:background="@drawable/bg_icon_button"
             android:src="@drawable/ic_refresh"
@@ -437,7 +442,7 @@
         <ImageButton
             android:id="@+id/btnNavMenu"
             android:layout_width="0dp"
-            android:layout_height="40dp"
+            android:layout_height="44dp"
             android:layout_weight="1"
             android:background="@drawable/bg_icon_button"
             android:src="@drawable/ic_more_vert"

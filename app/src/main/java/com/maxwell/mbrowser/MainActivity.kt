@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Bitmap
 import android.os.Bundle
+import android.util.TypedValue
 import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
@@ -17,18 +18,13 @@ import android.webkit.WebResourceResponse
 import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.ProgressBar
-import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import com.maxwell.mbrowser.cloud.CloudDriveDialog
 import com.maxwell.mbrowser.databinding.ActivityMainBinding
@@ -38,15 +34,15 @@ import com.maxwell.mbrowser.devtools.LogLevel
 import com.maxwell.mbrowser.dialogs.AboutDialog
 import com.maxwell.mbrowser.engine.AdTrackerBlocker
 import com.maxwell.mbrowser.gameboost.GameBoostManager
-import com.maxwell.mbrowser.hub.IngeHubManager
 import com.maxwell.mbrowser.office.OfficeViewerDialog
+import com.maxwell.mbrowser.server.LocalServerEngine
 import com.maxwell.mbrowser.server.LocalServerPanelDialog
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var webView: WebView
-    private val defaultHomeUrl = "https://ingemaxwellchacon.com"
+    private val speedDialHomeUrl = "file:///android_asset/newtab.html"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,13 +51,47 @@ class MainActivity : AppCompatActivity() {
 
         webView = binding.mainWebView
 
+        setupWindowInsets()
         setupWebView()
         setupListeners()
         setupDevToolsObserver()
         setupBackNavigation()
 
-        // Load Default Home Page (Inge Maxwell Chacon Portfolio)
-        loadUrl(defaultHomeUrl)
+        // Load Speed Dial Start Screen (Home Page)
+        loadUrl(speedDialHomeUrl)
+    }
+
+    private fun setupWindowInsets() {
+        ViewCompat.setOnApplyWindowInsetsListener(binding.rootLayout) { _, windowInsets ->
+            val statusBarInsets = windowInsets.getInsets(WindowInsetsCompat.Type.statusBars())
+            val navBarInsets = windowInsets.getInsets(WindowInsetsCompat.Type.navigationBars())
+
+            // Apply safe top padding to prevent overlapping Android status bar
+            binding.topToolbarContainer.setPadding(
+                dpToPx(10),
+                statusBarInsets.top + dpToPx(6),
+                dpToPx(10),
+                dpToPx(6)
+            )
+
+            // Apply safe bottom padding to prevent overlapping Android 3-button or gesture navigation bar
+            binding.bottomToolbarContainer.setPadding(
+                dpToPx(16),
+                dpToPx(6),
+                dpToPx(16),
+                navBarInsets.bottom + dpToPx(6)
+            )
+
+            WindowInsetsCompat.CONSUMED
+        }
+    }
+
+    private fun dpToPx(dp: Int): Int {
+        return TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP,
+            dp.toFloat(),
+            resources.displayMetrics
+        ).toInt()
     }
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -75,18 +105,20 @@ class MainActivity : AppCompatActivity() {
         settings.displayZoomControls = false
         settings.loadWithOverviewMode = true
         settings.useWideViewPort = true
+        settings.allowFileAccess = true
+        settings.allowContentAccess = true
         settings.mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
         settings.cacheMode = WebSettings.LOAD_DEFAULT
 
         // High Performance Hardware Acceleration
         webView.setLayerType(View.LAYER_TYPE_HARDWARE, null)
 
-        // Javascript Bridge for DevTools
+        // Javascript Bridge for DevTools & Home Speed Dial Actions
         webView.addJavascriptInterface(MBrowserJsBridge(), "MBrowserBridge")
 
         webView.webChromeClient = object : WebChromeClient() {
             override fun onProgressChanged(view: WebView?, newProgress: Int) {
-                if (newProgress < 100) {
+                if (newProgress < 100 && webView.url != speedDialHomeUrl) {
                     binding.progressBarLoading.visibility = View.VISIBLE
                     binding.progressBarLoading.progress = newProgress
                 } else {
@@ -130,8 +162,15 @@ class MainActivity : AppCompatActivity() {
             override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
                 super.onPageStarted(view, url, favicon)
                 url?.let {
-                    binding.etUrlInput.setText(it)
-                    updateSecurityIcon(it)
+                    if (it == speedDialHomeUrl) {
+                        binding.etUrlInput.setText("")
+                        binding.etUrlInput.hint = getString(R.string.url_hint)
+                        binding.ivSecurityStatus.setImageResource(R.drawable.ic_shield)
+                        binding.ivSecurityStatus.setColorFilter(ContextCompat.getColor(this@MainActivity, R.color.aqua_cyan))
+                    } else {
+                        binding.etUrlInput.setText(it)
+                        updateSecurityIcon(it)
+                    }
                 }
                 binding.btnGoOrReload.setImageResource(R.drawable.ic_close)
             }
@@ -141,7 +180,7 @@ class MainActivity : AppCompatActivity() {
                 binding.btnGoOrReload.setImageResource(R.drawable.ic_refresh)
                 updateNavigationButtons()
 
-                // Inject client-side error reporter to catch runtime exceptions and unhandled promise rejections
+                // Inject client-side error reporter to catch runtime exceptions
                 val errorScript = """
                     (function() {
                         if (window.__mbrowser_injected) return;
@@ -213,11 +252,9 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        // IngeHub Button
-        binding.btnIngeHub.setOnClickListener {
-            IngeHubManager.showIngeHub(this) { url ->
-                loadUrl(url)
-            }
+        // Home / Speed Dial Button
+        binding.btnHomeSpeedDial.setOnClickListener {
+            loadUrl(speedDialHomeUrl)
         }
 
         // OfficeFreeToAndroid Module Button
@@ -289,7 +326,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.btnNavHome.setOnClickListener {
-            loadUrl(defaultHomeUrl)
+            loadUrl(speedDialHomeUrl)
         }
 
         binding.btnHardReload.setOnClickListener {
@@ -337,9 +374,13 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun loadUrl(rawUrl: String) {
+    fun loadUrl(rawUrl: String) {
         var formatted = rawUrl.trim()
-        if (!formatted.startsWith("http://") && !formatted.startsWith("https://")) {
+        if (formatted == speedDialHomeUrl) {
+            webView.loadUrl(speedDialHomeUrl)
+            return
+        }
+        if (!formatted.startsWith("http://") && !formatted.startsWith("https://") && !formatted.startsWith("file://")) {
             formatted = if (formatted.contains(".") && !formatted.contains(" ")) {
                 "https://$formatted"
             } else {
@@ -367,10 +408,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun showMainMenu() {
         val options = arrayOf(
-            "🏠 Ir a Inicio (ingemaxwellchacon.com)",
-            "📄 Suite Ofimática (Writer, Calc, Impress, AI)",
-            "🖥️ Servidor Local (Apache, PHP, MySQL, Postgres)",
+            "🏠 Pantalla de Inicio / Speed Dial",
+            "📄 Suite Ofimática (Word, Excel, PowerPoint, AI)",
+            "🖥️ Servidor Local & Red LAN (Apache, MySQL)",
             "☁️ Google Drive & Respaldo Cloud",
+            "🌐 Abrir Portafolio (ingemaxwellchacon.com)",
             "🧹 Limpiar Todo el Caché y Datos",
             "🚀 Modo Super Hiper Veloz (${if (AdTrackerBlocker.isEnabled) "Activo" else "Inactivo"})",
             "🎮 Modo Gaming & Cloud Play",
@@ -382,15 +424,16 @@ class MainActivity : AppCompatActivity() {
             .setTitle("Menú de MBrowser All-in-One")
             .setItems(options) { _, which ->
                 when (which) {
-                    0 -> loadUrl(defaultHomeUrl)
+                    0 -> loadUrl(speedDialHomeUrl)
                     1 -> OfficeViewerDialog.showSuiteHub(this, lifecycleScope)
                     2 -> LocalServerPanelDialog.show(this) { url -> loadUrl(url) }
                     3 -> CloudDriveDialog.show(this)
-                    4 -> DevToolsManager.clearCache(this, webView, showToast = true)
-                    5 -> binding.btnSuperVelozToggle.performClick()
-                    6 -> toggleGameBoostMode()
-                    7 -> DevToolsManager.showDevToolsDialog(this, webView)
-                    8 -> AboutDialog.show(this)
+                    4 -> loadUrl("https://ingemaxwellchacon.com")
+                    5 -> DevToolsManager.clearCache(this, webView, showToast = true)
+                    6 -> binding.btnSuperVelozToggle.performClick()
+                    7 -> toggleGameBoostMode()
+                    8 -> DevToolsManager.showDevToolsDialog(this, webView)
+                    9 -> AboutDialog.show(this)
                 }
             }
             .show()
@@ -405,6 +448,8 @@ class MainActivity : AppCompatActivity() {
                 }
                 if (webView.canGoBack()) {
                     webView.goBack()
+                } else if (webView.url != speedDialHomeUrl) {
+                    loadUrl(speedDialHomeUrl)
                 } else {
                     finish()
                 }
@@ -418,6 +463,24 @@ class MainActivity : AppCompatActivity() {
     }
 
     inner class MBrowserJsBridge {
+        @JavascriptInterface
+        fun openUrl(url: String) {
+            runOnUiThread {
+                loadUrl(url)
+            }
+        }
+
+        @JavascriptInterface
+        fun openModule(moduleName: String) {
+            runOnUiThread {
+                when (moduleName.lowercase()) {
+                    "office" -> OfficeViewerDialog.showSuiteHub(this@MainActivity, lifecycleScope)
+                    "server" -> LocalServerPanelDialog.show(this@MainActivity) { url -> loadUrl(url) }
+                    "drive" -> CloudDriveDialog.show(this@MainActivity)
+                }
+            }
+        }
+
         @JavascriptInterface
         fun reportError(message: String, source: String, lineno: Int) {
             DevToolsManager.addLog(

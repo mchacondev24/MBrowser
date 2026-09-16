@@ -11,12 +11,12 @@ enum class DocumentType {
 
 data class OfficeDocument(
     val id: String,
-    val title: String,
+    var title: String,
     val type: DocumentType,
     val fileExtension: String,
     val localPath: String,
-    val lastModified: Long = System.currentTimeMillis(),
-    val sizeBytes: Long = 0,
+    var lastModified: Long = System.currentTimeMillis(),
+    var sizeBytes: Long = 0,
     var isSyncedWithDrive: Boolean = false
 ) {
     val file: File get() = File(localPath)

@@ -1,147 +1,318 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp"
-    android:background="@drawable/bg_glass_card">
+    android:background="@color/aero_bg_dark">
 
-    <!-- Header -->
+    <!-- Top Window / Workspace Bar (Aero Glass Style) -->
     <LinearLayout
+        android:id="@+id/editorTopBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="12dp"
+        android:background="@drawable/bg_glass_bar"
+        android:elevation="6dp">
 
         <ImageView
             android:id="@+id/ivEditorDocType"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
             android:src="@drawable/ic_description"
             android:tint="@color/aqua_cyan" />
 
-        <TextView
-            android:id="@+id/tvEditorTitle"
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_marginStart="8dp"
-            android:text="Documento.docx"
-            android:textColor="@color/text_primary"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:maxLines="1"
-            android:ellipsize="middle" />
+            android:layout_marginStart="10dp"
+            android:orientation="vertical">
 
+            <EditText
+                android:id="@+id/etEditorDocTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:text="Mi_Documento.docx"
+                android:textColor="@color/text_primary"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:singleLine="true"
+                android:inputType="text" />
+
+            <TextView
+                android:id="@+id/tvDocTypeSubtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="OfficeFreeToAndroid • Modo Edición"
+                android:textColor="@color/aqua_cyan"
+                android:textSize="10sp" />
+        </LinearLayout>
+
+        <!-- Save to Google Drive -->
         <ImageButton
             android:id="@+id/btnDriveSyncEditor"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
             android:layout_marginEnd="6dp"
-            android:background="@drawable/bg_icon_button"
+            android:background="@drawable/bg_aqua_pill"
             android:src="@drawable/ic_cloud"
-            android:contentDescription="Sincronizar en Drive" />
+            android:tint="@color/aqua_cyan"
+            android:padding="8dp"
+            android:contentDescription="Guardar en Google Drive" />
 
-        <ImageButton
-            android:id="@+id/btnCloseEditor"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:background="@drawable/bg_icon_button"
-            android:src="@drawable/ic_close"
-            android:contentDescription="Cerrar" />
-    </LinearLayout>
-
-    <!-- AI Toolbar Row -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="10dp"
-        android:gravity="center_vertical"
-        android:padding="6dp"
-        android:background="@drawable/bg_dev_badge">
-
-        <ImageView
-            android:layout_width="18dp"
-            android:layout_height="18dp"
-            android:src="@drawable/ic_auto_awesome"
-            android:tint="@color/dev_purple" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginStart="6dp"
-            android:text="Gemini AI Assistant"
-            android:textColor="@color/text_primary"
-            android:textSize="12sp"
-            android:textStyle="bold" />
-
-        <Button
-            android:id="@+id/btnAiSummarize"
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:layout_marginEnd="4dp"
-            android:background="@drawable/bg_aqua_pill"
-            android:text="Resumir"
-            android:textColor="@color/text_primary"
-            android:textSize="10sp"
-            android:paddingHorizontal="6dp" />
-
-        <Button
-            android:id="@+id/btnAiImprove"
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:background="@drawable/bg_aqua_pill"
-            android:text="Mejorar"
-            android:textColor="@color/text_primary"
-            android:textSize="10sp"
-            android:paddingHorizontal="6dp" />
-    </LinearLayout>
-
-    <!-- Document Content Editor / Viewer -->
-    <EditText
-        android:id="@+id/etDocumentContent"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_marginTop="10dp"
-        android:background="#26000000"
-        android:gravity="top|start"
-        android:padding="10dp"
-        android:textColor="@color/text_primary"
-        android:textSize="13sp"
-        android:fontFamily="sans-serif"
-        android:inputType="textMultiLine"
-        android:scrollbars="vertical" />
-
-    <!-- Action Buttons (Save, Print Preview, Export PDF) -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="12dp">
-
+        <!-- Save Local -->
         <Button
             android:id="@+id/btnSaveDocument"
-            android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:layout_weight="1"
-            android:layout_marginEnd="4dp"
+            android:layout_width="wrap_content"
+            android:layout_height="38dp"
+            android:layout_marginEnd="6dp"
             android:background="@drawable/bg_aqua_button"
             android:text="Guardar"
             android:textColor="@color/text_primary"
             android:textSize="12sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:paddingHorizontal="12dp" />
 
-        <Button
-            android:id="@+id/btnPrintPreview"
-            android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:layout_weight="1"
-            android:layout_marginStart="4dp"
-            android:background="@drawable/bg_glass_card"
-            android:text="Vista Previa / PDF"
+        <!-- Close / Exit -->
+        <ImageButton
+            android:id="@+id/btnCloseEditor"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:background="@drawable/bg_icon_button"
+            android:src="@drawable/ic_close"
+            android:tint="@color/text_primary"
+            android:padding="8dp"
+            android:contentDescription="Cerrar" />
+    </LinearLayout>
+
+    <!-- Gemini AI Smart Assist Bar -->
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none"
+        android:background="#1500E5FF"
+        android:paddingVertical="6dp"
+        android:paddingHorizontal="12dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:src="@drawable/ic_auto_awesome"
+                android:tint="@color/turbo_yellow" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:layout_marginEnd="8dp"
+                android:text="Gemini AI:"
+                android:textColor="@color/turbo_yellow"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btnAiSummarize"
+                android:layout_width="wrap_content"
+                android:layout_height="28dp"
+                android:layout_marginEnd="4dp"
+                android:background="@drawable/bg_aqua_pill"
+                android:text="Resumir"
+                android:textColor="@color/text_primary"
+                android:textSize="10sp"
+                android:paddingHorizontal="8dp" />
+
+            <Button
+                android:id="@+id/btnAiImprove"
+                android:layout_width="wrap_content"
+                android:layout_height="28dp"
+                android:layout_marginEnd="4dp"
+                android:background="@drawable/bg_aqua_pill"
+                android:text="Mejorar Redacción"
+                android:textColor="@color/text_primary"
+                android:textSize="10sp"
+                android:paddingHorizontal="8dp" />
+
+            <Button
+                android:id="@+id/btnAiFormulas"
+                android:layout_width="wrap_content"
+                android:layout_height="28dp"
+                android:layout_marginEnd="4dp"
+                android:background="@drawable/bg_game_badge"
+                android:text="Fórmulas fx"
+                android:textColor="@color/text_primary"
+                android:textSize="10sp"
+                android:paddingHorizontal="8dp" />
+
+            <Button
+                android:id="@+id/btnAiTranslate"
+                android:layout_width="wrap_content"
+                android:layout_height="28dp"
+                android:background="@drawable/bg_dev_badge"
+                android:text="Traducir"
+                android:textColor="@color/text_primary"
+                android:textSize="10sp"
+                android:paddingHorizontal="8dp" />
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <!-- Office Formatting & Tools Ribbon -->
+    <HorizontalScrollView
+        android:id="@+id/ribbonScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none"
+        android:background="@drawable/bg_glass_card"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="8dp"
+        android:paddingVertical="4dp"
+        android:paddingHorizontal="8dp">
+
+        <LinearLayout
+            android:id="@+id/toolsRibbonLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <Button
+                android:id="@+id/btnFormatBold"
+                android:layout_width="36dp"
+                android:layout_height="32dp"
+                android:layout_marginEnd="4dp"
+                android:background="@drawable/bg_aqua_pill"
+                android:text="B"
+                android:textColor="@color/text_primary"
+                android:textStyle="bold"
+                android:textSize="13sp" />
+
+            <Button
+                android:id="@+id/btnFormatItalic"
+                android:layout_width="36dp"
+                android:layout_height="32dp"
+                android:layout_marginEnd="4dp"
+                android:background="@drawable/bg_aqua_pill"
+                android:text="I"
+                android:textColor="@color/text_primary"
+                android:textStyle="italic"
+                android:textSize="13sp" />
+
+            <Button
+                android:id="@+id/btnFormatH1"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:layout_marginEnd="4dp"
+                android:background="@drawable/bg_aqua_pill"
+                android:text="Título 1"
+                android:textColor="@color/text_primary"
+                android:textSize="11sp"
+                android:paddingHorizontal="8dp" />
+
+            <Button
+                android:id="@+id/btnFormatH2"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:layout_marginEnd="4dp"
+                android:background="@drawable/bg_aqua_pill"
+                android:text="Título 2"
+                android:textColor="@color/text_primary"
+                android:textSize="11sp"
+                android:paddingHorizontal="8dp" />
+
+            <Button
+                android:id="@+id/btnInsertTable"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:layout_marginEnd="4dp"
+                android:background="@drawable/bg_aqua_pill"
+                android:text="➕ Tabla"
+                android:textColor="@color/text_primary"
+                android:textSize="11sp"
+                android:paddingHorizontal="8dp" />
+
+            <Button
+                android:id="@+id/btnInsertBullets"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:layout_marginEnd="4dp"
+                android:background="@drawable/bg_aqua_pill"
+                android:text="• Viñetas"
+                android:textColor="@color/text_primary"
+                android:textSize="11sp"
+                android:paddingHorizontal="8dp" />
+
+            <Button
+                android:id="@+id/btnPrintPreview"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:background="@drawable/bg_game_badge"
+                android:text="🖨️ PDF / Imprimir"
+                android:textColor="@color/text_primary"
+                android:textSize="11sp"
+                android:paddingHorizontal="8dp" />
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <!-- Document Content Editor / Canvas -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_margin="10dp"
+        android:background="@drawable/bg_glass_card"
+        android:padding="4dp">
+
+        <EditText
+            android:id="@+id/etDocumentContent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:gravity="top|start"
+            android:padding="16dp"
             android:textColor="@color/text_primary"
-            android:textSize="12sp" />
+            android:textSize="15sp"
+            android:lineSpacingMultiplier="1.25"
+            android:fontFamily="sans-serif"
+            android:inputType="textMultiLine|textCapSentences"
+            android:scrollbars="vertical"
+            android:hint="Comienza a escribir tu documento aquí..."
+            android:textColorHint="@color/text_muted" />
+    </FrameLayout>
+
+    <!-- Bottom Status Info Bar -->
+    <LinearLayout
+        android:id="@+id/editorBottomBar"
+        android:layout_width="match_parent"
+        android:layout_height="38dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="16dp"
+        android:background="@drawable/bg_glass_bar">
+
+        <TextView
+            android:id="@+id/tvWordCount"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Palabras: 0 • Caracteres: 0"
+            android:textColor="@color/text_secondary"
+            android:textSize="11sp" />
+
+        <TextView
+            android:id="@+id/tvCloudSyncStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Local (Sin guardar en Drive)"
+            android:textColor="@color/text_muted"
+            android:textSize="11sp" />
     </LinearLayout>
 </LinearLayout>

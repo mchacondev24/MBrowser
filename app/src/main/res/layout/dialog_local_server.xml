@@ -29,7 +29,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="ApacheMysqlAndroid Server"
+                android:text="Servidor Web &amp; Base de Datos"
                 android:textColor="@color/text_primary"
                 android:textSize="17sp"
                 android:textStyle="bold" />
@@ -37,7 +37,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Servidor Web &amp; Base de Datos Portátil"
+                android:text="Apache 2.4 • PHP 8.3 • MySQL 8.0 • PostgreSQL"
                 android:textColor="@color/game_emerald"
                 android:textSize="11sp" />
         </LinearLayout>
@@ -51,176 +51,296 @@
             android:contentDescription="Cerrar" />
     </LinearLayout>
 
-    <!-- Global Master Switch -->
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="12dp"
-        android:gravity="center_vertical"
-        android:padding="10dp"
-        android:background="@drawable/bg_game_badge">
+        android:layout_height="380dp"
+        android:layout_marginTop="10dp"
+        android:scrollbars="vertical">
 
-        <TextView
-            android:id="@+id/tvServerMasterStatus"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Estado: Servicios Inactivos"
-            android:textColor="@color/text_primary"
-            android:textStyle="bold"
-            android:textSize="13sp" />
-
-        <Button
-            android:id="@+id/btnToggleAllServices"
-            android:layout_width="wrap_content"
-            android:layout_height="36dp"
-            android:background="@drawable/bg_aqua_button"
-            android:text="Iniciar Todos"
-            android:textColor="@color/text_primary"
-            android:textSize="11sp"
-            android:textStyle="bold"
-            android:paddingHorizontal="12dp" />
-    </LinearLayout>
-
-    <!-- Individual Services List -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginTop="10dp">
-
-        <!-- Apache HTTP -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:padding="8dp"
-            android:layout_marginBottom="4dp"
-            android:background="@drawable/bg_aqua_pill">
+            android:orientation="vertical">
 
-            <TextView
-                android:layout_width="0dp"
+            <!-- Global Master Switch -->
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Apache HTTP (v2.4) • Puerto 8080"
-                android:textColor="@color/text_primary"
-                android:textSize="12sp" />
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="12dp"
+                android:background="@drawable/bg_game_badge">
 
-            <TextView
-                android:id="@+id/tvStatusApache"
-                android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvServerMasterStatus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Estado: Servidor Activo 🟢"
+                        android:textColor="@color/text_primary"
+                        android:textStyle="bold"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Apache, PHP y Bases de Datos listos"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="11sp" />
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/btnToggleAllServices"
+                    android:layout_width="wrap_content"
+                    android:layout_height="38dp"
+                    android:background="@drawable/bg_aqua_button"
+                    android:text="Detener"
+                    android:textColor="@color/text_primary"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:paddingHorizontal="14dp" />
+            </LinearLayout>
+
+            <!-- Mini-Servidor en Red Local (LAN) Card -->
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="OFF"
-                android:textColor="@color/dev_error_red"
-                android:textStyle="bold"
-                android:textSize="11sp" />
+                android:orientation="vertical"
+                android:layout_marginTop="10dp"
+                android:padding="12dp"
+                android:background="@drawable/bg_aqua_pill">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:src="@drawable/ic_wifi"
+                        android:tint="@color/aqua_cyan" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginStart="6dp"
+                        android:text="Mini-Servidor para Red Local (LAN)"
+                        android:textColor="@color/aqua_cyan"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tvLanAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="http://192.168.1.100:8080"
+                    android:textColor="@color/text_primary"
+                    android:textStyle="bold"
+                    android:textSize="15sp"
+                    android:fontFamily="monospace" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="💡 Otros teléfonos o PCs conectados a este mismo WiFi pueden abrir esta dirección para navegar tu sitio web alojado en este celular."
+                    android:textColor="@color/text_secondary"
+                    android:textSize="10sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="8dp">
+
+                    <Button
+                        android:id="@+id/btnCopyLanUrl"
+                        android:layout_width="0dp"
+                        android:layout_height="34dp"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="4dp"
+                        android:background="@drawable/bg_glass_card"
+                        android:text="📋 Copiar URL"
+                        android:textColor="@color/text_primary"
+                        android:textSize="11sp" />
+
+                    <Button
+                        android:id="@+id/btnShareLanUrl"
+                        android:layout_width="0dp"
+                        android:layout_height="34dp"
+                        android:layout_weight="1"
+                        android:layout_marginStart="4dp"
+                        android:background="@drawable/bg_aqua_button"
+                        android:text="🔗 Compartir Enlace"
+                        android:textColor="@color/text_primary"
+                        android:textSize="11sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Despliegue de Sitios Web (.ZIP) -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="10dp"
+                android:padding="12dp"
+                android:background="@drawable/bg_glass_card">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="📦 Desplegar Sitio Web (.ZIP o Plantilla)"
+                    android:textColor="@color/text_primary"
+                    android:textStyle="bold"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="Sube un archivo comprimido .ZIP con tu código HTML/PHP/JS o despliega una plantilla web interactiva lista para probar."
+                    android:textColor="@color/text_secondary"
+                    android:textSize="10sp" />
+
+                <Button
+                    android:id="@+id/btnDeployWebsite"
+                    android:layout_width="match_parent"
+                    android:layout_height="36dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/bg_game_badge"
+                    android:text="🚀 Desplegar Sitio Web en htdocs/www"
+                    android:textColor="@color/text_primary"
+                    android:textSize="11sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <!-- Gestor de Base de Datos -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="10dp"
+                android:padding="12dp"
+                android:background="@drawable/bg_dev_badge">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="🗄️ Gestor de Bases de Datos (MySQL / SQLite)"
+                    android:textColor="@color/text_primary"
+                    android:textStyle="bold"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tvActiveDatabase"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="Bases de datos: app_default_db, mbrowser_users"
+                    android:textColor="@color/turbo_yellow"
+                    android:textSize="11sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="8dp">
+
+                    <Button
+                        android:id="@+id/btnCreateDb"
+                        android:layout_width="0dp"
+                        android:layout_height="34dp"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="4dp"
+                        android:background="@drawable/bg_aqua_pill"
+                        android:text="➕ Nueva BD"
+                        android:textColor="@color/text_primary"
+                        android:textSize="11sp" />
+
+                    <Button
+                        android:id="@+id/btnExecuteSql"
+                        android:layout_width="0dp"
+                        android:layout_height="34dp"
+                        android:layout_weight="1"
+                        android:layout_marginStart="4dp"
+                        android:background="@drawable/bg_aqua_pill"
+                        android:text="⚡ Ejecutar SQL"
+                        android:textColor="@color/text_primary"
+                        android:textSize="11sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Individual Services Status Badges -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:id="@+id/tvStatusApache"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="6dp"
+                    android:layout_marginEnd="2dp"
+                    android:background="@drawable/bg_glass_card"
+                    android:text="Apache: ON"
+                    android:textColor="@color/game_emerald"
+                    android:textSize="10sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvStatusPhp"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="6dp"
+                    android:layout_marginHorizontal="2dp"
+                    android:background="@drawable/bg_glass_card"
+                    android:text="PHP: 8.3"
+                    android:textColor="@color/game_emerald"
+                    android:textSize="10sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvStatusMysql"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="6dp"
+                    android:layout_marginStart="2dp"
+                    android:background="@drawable/bg_glass_card"
+                    android:text="MySQL: ON"
+                    android:textColor="@color/game_emerald"
+                    android:textSize="10sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
         </LinearLayout>
-
-        <!-- PHP Engine -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:padding="8dp"
-            android:layout_marginBottom="4dp"
-            android:background="@drawable/bg_aqua_pill">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="PHP Engine (v8.3) • CLI/FPM"
-                android:textColor="@color/text_primary"
-                android:textSize="12sp" />
-
-            <TextView
-                android:id="@+id/tvStatusPhp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="OFF"
-                android:textColor="@color/dev_error_red"
-                android:textStyle="bold"
-                android:textSize="11sp" />
-        </LinearLayout>
-
-        <!-- MySQL Database -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:padding="8dp"
-            android:layout_marginBottom="4dp"
-            android:background="@drawable/bg_aqua_pill">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="MySQL Database (v8.0) • Puerto 3306"
-                android:textColor="@color/text_primary"
-                android:textSize="12sp" />
-
-            <TextView
-                android:id="@+id/tvStatusMysql"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="OFF"
-                android:textColor="@color/dev_error_red"
-                android:textStyle="bold"
-                android:textSize="11sp" />
-        </LinearLayout>
-
-        <!-- PostgreSQL Database -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:padding="8dp"
-            android:layout_marginBottom="4dp"
-            android:background="@drawable/bg_aqua_pill">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="PostgreSQL (v16.2) • Puerto 5432"
-                android:textColor="@color/text_primary"
-                android:textSize="12sp" />
-
-            <TextView
-                android:id="@+id/tvStatusPostgres"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="OFF"
-                android:textColor="@color/dev_error_red"
-                android:textStyle="bold"
-                android:textSize="11sp" />
-        </LinearLayout>
-    </LinearLayout>
-
-    <!-- Network Info & LAN Address -->
-    <TextView
-        android:id="@+id/tvLanAddress"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="LAN IP: http://192.168.1.50:8080 (Listo para pruebas en red local)"
-        android:textColor="@color/text_secondary"
-        android:textSize="11sp" />
+    </ScrollView>
 
     <!-- Open in MBrowser Button -->
     <Button
         android:id="@+id/btnOpenLocalhostInBrowser"
         android:layout_width="match_parent"
-        android:layout_height="42dp"
+        android:layout_height="44dp"
         android:layout_marginTop="12dp"
         android:background="@drawable/bg_aqua_button"
-        android:text="Abrir http://localhost:8080 en MBrowser"
+        android:text="🌐 Abrir http://localhost:8080 en MBrowser"
         android:textColor="@color/text_primary"
+        android:textSize="13sp"
         android:textStyle="bold" />
 </LinearLayout>

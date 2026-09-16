@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>MBrowser • Inicio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background: linear-gradient(135deg, #091524 0%, #0d233a 50%, #06101c 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            padding: 20px 16px 80px 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+        }
+
+        /* Ambient glowing background */
+        .ambient-glow {
+            position: fixed;
+            top: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 320px;
+            height: 320px;
+            background: radial-gradient(circle, rgba(0, 229, 255, 0.25) 0%, rgba(0, 102, 255, 0.08) 60%, transparent 80%);
+            filter: blur(50px);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Header Logo & Title */
+        .header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 15px;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        .logo-box {
+            position: relative;
+            width: 76px;
+            height: 76px;
+            margin-bottom: 12px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(0, 229, 255, 0.35);
+            box-shadow: 0 8px 32px rgba(0, 229, 255, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(12px);
+        }
+
+        .logo-box img {
+            width: 52px;
+            height: 52px;
+            object-fit: contain;
+            filter: drop-shadow(0 2px 8px rgba(0, 229, 255, 0.5));
+        }
+
+        .app-title {
+            font-size: 26px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            background: linear-gradient(180deg, #ffffff 30%, #7ee7ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 10px rgba(0, 229, 255, 0.3);
+        }
+
+        .app-subtitle {
+            font-size: 12px;
+            color: #8da4be;
+            margin-top: 2px;
+            font-weight: 500;
+        }
+
+        /* Search Box */
+        .search-container {
+            width: 100%;
+            margin-bottom: 24px;
+        }
+
+        .search-bar {
+            width: 100%;
+            height: 52px;
+            background: rgba(13, 35, 58, 0.75);
+            border: 1.5px solid rgba(0, 229, 255, 0.3);
+            border-radius: 26px;
+            display: flex;
+            align-items: center;
+            padding: 0 18px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(16px);
+            transition: all 0.25s ease;
+        }
+
+        .search-bar:focus-within {
+            border-color: #00e5ff;
+            box-shadow: 0 8px 30px rgba(0, 229, 255, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+            transform: translateY(-1px);
+        }
+
+        .search-icon {
+            color: #00e5ff;
+            font-size: 18px;
+            margin-right: 12px;
+            display: flex;
+            align-items: center;
+        }
+
+        .search-input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: #ffffff;
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        .search-input::placeholder {
+            color: #6c849e;
+        }
+
+        .search-btn {
+            background: linear-gradient(180deg, #00e5ff 0%, #0088cc 100%);
+            border: none;
+            border-radius: 18px;
+            color: #051626;
+            font-weight: 700;
+            font-size: 12px;
+            padding: 7px 14px;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0, 229, 255, 0.4);
+        }
+
+        /* Super-App Quick Actions */
+        .section-title {
+            width: 100%;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: #6b8ea8;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .super-modules-grid {
+            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 24px;
+        }
+
+        .module-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 16px;
+            padding: 12px 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+        }
+
+        .module-card:active {
+            transform: scale(0.96);
+            background: rgba(0, 229, 255, 0.12);
+            border-color: rgba(0, 229, 255, 0.4);
+        }
+
+        .module-card.office {
+            border-color: rgba(0, 162, 255, 0.35);
+        }
+
+        .module-card.server {
+            border-color: rgba(0, 230, 118, 0.35);
+        }
+
+        .module-card.drive {
+            border-color: rgba(255, 215, 0, 0.35);
+        }
+
+        .module-icon-circle {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 8px;
+            font-size: 20px;
+        }
+
+        .module-card.office .module-icon-circle {
+            background: linear-gradient(135deg, rgba(0, 162, 255, 0.25), rgba(0, 102, 204, 0.4));
+            color: #38bdf8;
+            border: 1px solid rgba(56, 189, 248, 0.4);
+        }
+
+        .module-card.server .module-icon-circle {
+            background: linear-gradient(135deg, rgba(0, 230, 118, 0.25), rgba(0, 150, 60, 0.4));
+            color: #4ade80;
+            border: 1px solid rgba(74, 222, 128, 0.4);
+        }
+
+        .module-card.drive .module-icon-circle {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.25), rgba(200, 150, 0, 0.4));
+            color: #facc15;
+            border: 1px solid rgba(250, 204, 21, 0.4);
+        }
+
+        .module-name {
+            font-size: 13px;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .module-desc {
+            font-size: 10px;
+            color: #8da4be;
+            margin-top: 2px;
+        }
+
+        /* Speed Dial Bookmarks Grid */
+        .speed-dial-grid {
+            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .dial-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .dial-item:active {
+            transform: scale(0.92);
+        }
+
+        .dial-icon {
+            width: 54px;
+            height: 54px;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 6px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            font-size: 24px;
+            overflow: hidden;
+        }
+
+        .dial-icon img {
+            width: 32px;
+            height: 32px;
+            object-fit: contain;
+        }
+
+        .dial-label {
+            font-size: 11px;
+            font-weight: 600;
+            color: #cbd5e1;
+            text-align: center;
+            max-width: 68px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* Footer Credits */
+        .footer-credits {
+            margin-top: 10px;
+            font-size: 11px;
+            color: #5c758a;
+            text-align: center;
+            line-height: 1.5;
+        }
+
+        .footer-credits a {
+            color: #00e5ff;
+            text-decoration: none;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="ambient-glow"></div>
+
+    <div class="container">
+        <!-- Logo & Header -->
+        <div class="header">
+            <div class="logo-box">
+                <img src="logo.png" alt="MBrowser" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'%2300e5ff\'><path d=\'M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z\'/></svg>'">
+            </div>
+            <h1 class="app-title">MBrowser</h1>
+            <p class="app-subtitle">Navegador Super Hiper Veloz &bull; Suite All-in-One</p>
+        </div>
+
+        <!-- Universal Search Bar -->
+        <div class="search-container">
+            <form id="searchForm" onsubmit="handleSearch(event)" class="search-bar">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="searchInput" class="search-input" placeholder="Buscar en la web o escribir URL..." autocomplete="off" autofocus>
+                <button type="submit" class="search-btn">Buscar</button>
+            </form>
+        </div>
+
+        <!-- Super-App Core Modules -->
+        <div class="section-title">⚡ HERRAMIENTAS INTEGRADAS</div>
+        <div class="super-modules-grid">
+            <div class="module-card office" onclick="openModule('office')">
+                <div class="module-icon-circle">📄</div>
+                <div class="module-name">Office Suite</div>
+                <div class="module-desc">Word, Excel, AI</div>
+            </div>
+            <div class="module-card server" onclick="openModule('server')">
+                <div class="module-icon-circle">🖥️</div>
+                <div class="module-name">Servidor Web</div>
+                <div class="module-desc">Apache &amp; MySQL</div>
+            </div>
+            <div class="module-card drive" onclick="openModule('drive')">
+                <div class="module-icon-circle">☁️</div>
+                <div class="module-name">Google Drive</div>
+                <div class="module-desc">Nube &amp; Respaldo</div>
+            </div>
+        </div>
+
+        <!-- Speed Dial: Principales & Populares -->
+        <div class="section-title">🌐 SITIOS POPULARES</div>
+        <div class="speed-dial-grid">
+            <a class="dial-item" onclick="navigate('https://www.google.com')">
+                <div class="dial-icon" style="background: linear-gradient(135deg, rgba(66, 133, 244, 0.25), rgba(234, 67, 53, 0.25));">
+                    🔍
+                </div>
+                <span class="dial-label">Google</span>
+            </a>
+            <a class="dial-item" onclick="navigate('https://www.youtube.com')">
+                <div class="dial-icon" style="background: linear-gradient(135deg, rgba(255, 0, 0, 0.3), rgba(200, 0, 0, 0.5));">
+                    ▶️
+                </div>
+                <span class="dial-label">YouTube</span>
+            </a>
+            <a class="dial-item" onclick="navigate('https://es.wikipedia.org')">
+                <div class="dial-icon" style="background: rgba(255, 255, 255, 0.15);">
+                    📖
+                </div>
+                <span class="dial-label">Wikipedia</span>
+            </a>
+            <a class="dial-item" onclick="navigate('https://github.com')">
+                <div class="dial-icon" style="background: rgba(36, 41, 46, 0.6);">
+                    🐙
+                </div>
+                <span class="dial-label">GitHub</span>
+            </a>
+        </div>
+
+        <!-- Speed Dial: Gaming & Cloud Play -->
+        <div class="section-title">🎮 GAMING &amp; CLOUD PLAY</div>
+        <div class="speed-dial-grid">
+            <a class="dial-item" onclick="navigate('https://www.xbox.com/play')">
+                <div class="dial-icon" style="background: linear-gradient(135deg, rgba(16, 124, 65, 0.4), rgba(16, 124, 65, 0.7));">
+                    🎮
+                </div>
+                <span class="dial-label">Xbox Cloud</span>
+            </a>
+            <a class="dial-item" onclick="navigate('https://play.geforcenow.com')">
+                <div class="dial-icon" style="background: linear-gradient(135deg, rgba(118, 185, 0, 0.4), rgba(118, 185, 0, 0.7));">
+                    ⚡
+                </div>
+                <span class="dial-label">GeForce NOW</span>
+            </a>
+            <a class="dial-item" onclick="navigate('https://www.crazygames.com')">
+                <div class="dial-icon" style="background: linear-gradient(135deg, rgba(147, 51, 234, 0.4), rgba(79, 70, 229, 0.6));">
+                    🕹️
+                </div>
+                <span class="dial-label">CrazyGames</span>
+            </a>
+            <a class="dial-item" onclick="navigate('https://poki.com')">
+                <div class="dial-icon" style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.4), rgba(16, 185, 129, 0.6));">
+                    👾
+                </div>
+                <span class="dial-label">Poki Juegos</span>
+            </a>
+        </div>
+
+        <!-- Speed Dial: Social, Tech & Portfolio -->
+        <div class="section-title">💼 PRODUCTIVIDAD &amp; REDES</div>
+        <div class="speed-dial-grid">
+            <a class="dial-item" onclick="navigate('https://www.reddit.com')">
+                <div class="dial-icon" style="background: linear-gradient(135deg, rgba(255, 69, 0, 0.3), rgba(255, 69, 0, 0.6));">
+                    🤖
+                </div>
+                <span class="dial-label">Reddit</span>
+            </a>
+            <a class="dial-item" onclick="navigate('https://twitter.com')">
+                <div class="dial-icon" style="background: rgba(0, 0, 0, 0.5);">
+                    𝕏
+                </div>
+                <span class="dial-label">X (Twitter)</span>
+            </a>
+            <a class="dial-item" onclick="navigate('https://mail.google.com')">
+                <div class="dial-icon" style="background: linear-gradient(135deg, rgba(234, 67, 53, 0.3), rgba(66, 133, 244, 0.3));">
+                    ✉️
+                </div>
+                <span class="dial-label">Gmail</span>
+            </a>
+            <a class="dial-item" onclick="navigate('https://ingemaxwellchacon.com')">
+                <div class="dial-icon" style="background: linear-gradient(135deg, rgba(0, 229, 255, 0.4), rgba(0, 102, 255, 0.6));">
+                    🌐
+                </div>
+                <span class="dial-label">Maxwell Ch.</span>
+            </a>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer-credits">
+            MBrowser 💧⚡ • Desarrollado por <a href="https://ingemaxwellchacon.com" target="_blank">Maxwell Chacón</a> (Nicaragua 🇳🇮)<br>
+            Motor GeckoView / Waterfox &bull; OfficeFree &bull; Apache Local Stack
+        </div>
+    </div>
+
+    <script>
+        function handleSearch(e) {
+            e.preventDefault();
+            const input = document.getElementById('searchInput').value.trim();
+            if (!input) return;
+
+            if (input.startsWith('http://') || input.startsWith('https://')) {
+                navigate(input);
+            } else if (input.includes('.') && !input.includes(' ')) {
+                navigate('https://' + input);
+            } else {
+                navigate('https://www.google.com/search?q=' + encodeURIComponent(input));
+            }
+        }
+
+        function navigate(url) {
+            if (window.MBrowserBridge && window.MBrowserBridge.openUrl) {
+                window.MBrowserBridge.openUrl(url);
+            } else {
+                window.location.href = url;
+            }
+        }
+
+        function openModule(moduleName) {
+            if (window.MBrowserBridge && window.MBrowserBridge.openModule) {
+                window.MBrowserBridge.openModule(moduleName);
+            } else {
+                alert('Módulo: ' + moduleName);
+            }
+        }
+    </script>
+</body>
+</html>
