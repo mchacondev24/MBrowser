@@ -31,6 +31,9 @@ public final class ActivityMainBinding implements ViewBinding {
   public final LinearLayout bottomToolbarContainer;
 
   @NonNull
+  public final LinearLayout btnCloudDriveModule;
+
+  @NonNull
   public final LinearLayout btnDevToolsToggle;
 
   @NonNull
@@ -64,7 +67,13 @@ public final class ActivityMainBinding implements ViewBinding {
   public final ImageButton btnNavMenu;
 
   @NonNull
+  public final LinearLayout btnOfficeModule;
+
+  @NonNull
   public final ImageButton btnQuickClearCache;
+
+  @NonNull
+  public final LinearLayout btnServerModule;
 
   @NonNull
   public final LinearLayout btnSuperVelozToggle;
@@ -106,21 +115,24 @@ public final class ActivityMainBinding implements ViewBinding {
   public final FrameLayout webContainer;
 
   private ActivityMainBinding(@NonNull RelativeLayout rootView,
-      @NonNull LinearLayout bottomToolbarContainer, @NonNull LinearLayout btnDevToolsToggle,
-      @NonNull ImageButton btnExitFullscreen, @NonNull Button btnFloatingCopyErrors,
-      @NonNull LinearLayout btnGameBoostToggle, @NonNull ImageButton btnGoOrReload,
-      @NonNull ImageButton btnHardReload, @NonNull LinearLayout btnIngeHub,
-      @NonNull ImageButton btnNavBack, @NonNull ImageButton btnNavForward,
-      @NonNull ImageButton btnNavHome, @NonNull ImageButton btnNavMenu,
-      @NonNull ImageButton btnQuickClearCache, @NonNull LinearLayout btnSuperVelozToggle,
-      @NonNull EditText etUrlInput, @NonNull LinearLayout floatingDevBar,
-      @NonNull ImageView ivSecurityStatus, @NonNull WebView mainWebView,
-      @NonNull ProgressBar progressBarLoading, @NonNull RelativeLayout rootLayout,
-      @NonNull LinearLayout topToolbarContainer, @NonNull TextView tvDevBadgeErrors,
-      @NonNull TextView tvFloatingErrorText, @NonNull TextView tvGameBoostLabel,
-      @NonNull TextView tvSuperVelozLabel, @NonNull FrameLayout webContainer) {
+      @NonNull LinearLayout bottomToolbarContainer, @NonNull LinearLayout btnCloudDriveModule,
+      @NonNull LinearLayout btnDevToolsToggle, @NonNull ImageButton btnExitFullscreen,
+      @NonNull Button btnFloatingCopyErrors, @NonNull LinearLayout btnGameBoostToggle,
+      @NonNull ImageButton btnGoOrReload, @NonNull ImageButton btnHardReload,
+      @NonNull LinearLayout btnIngeHub, @NonNull ImageButton btnNavBack,
+      @NonNull ImageButton btnNavForward, @NonNull ImageButton btnNavHome,
+      @NonNull ImageButton btnNavMenu, @NonNull LinearLayout btnOfficeModule,
+      @NonNull ImageButton btnQuickClearCache, @NonNull LinearLayout btnServerModule,
+      @NonNull LinearLayout btnSuperVelozToggle, @NonNull EditText etUrlInput,
+      @NonNull LinearLayout floatingDevBar, @NonNull ImageView ivSecurityStatus,
+      @NonNull WebView mainWebView, @NonNull ProgressBar progressBarLoading,
+      @NonNull RelativeLayout rootLayout, @NonNull LinearLayout topToolbarContainer,
+      @NonNull TextView tvDevBadgeErrors, @NonNull TextView tvFloatingErrorText,
+      @NonNull TextView tvGameBoostLabel, @NonNull TextView tvSuperVelozLabel,
+      @NonNull FrameLayout webContainer) {
     this.rootView = rootView;
     this.bottomToolbarContainer = bottomToolbarContainer;
+    this.btnCloudDriveModule = btnCloudDriveModule;
     this.btnDevToolsToggle = btnDevToolsToggle;
     this.btnExitFullscreen = btnExitFullscreen;
     this.btnFloatingCopyErrors = btnFloatingCopyErrors;
@@ -132,7 +144,9 @@ public final class ActivityMainBinding implements ViewBinding {
     this.btnNavForward = btnNavForward;
     this.btnNavHome = btnNavHome;
     this.btnNavMenu = btnNavMenu;
+    this.btnOfficeModule = btnOfficeModule;
     this.btnQuickClearCache = btnQuickClearCache;
+    this.btnServerModule = btnServerModule;
     this.btnSuperVelozToggle = btnSuperVelozToggle;
     this.etUrlInput = etUrlInput;
     this.floatingDevBar = floatingDevBar;
@@ -178,6 +192,12 @@ public final class ActivityMainBinding implements ViewBinding {
       id = R.id.bottomToolbarContainer;
       LinearLayout bottomToolbarContainer = ViewBindings.findChildViewById(rootView, id);
       if (bottomToolbarContainer == null) {
+        break missingId;
+      }
+
+      id = R.id.btnCloudDriveModule;
+      LinearLayout btnCloudDriveModule = ViewBindings.findChildViewById(rootView, id);
+      if (btnCloudDriveModule == null) {
         break missingId;
       }
 
@@ -247,9 +267,21 @@ public final class ActivityMainBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.btnOfficeModule;
+      LinearLayout btnOfficeModule = ViewBindings.findChildViewById(rootView, id);
+      if (btnOfficeModule == null) {
+        break missingId;
+      }
+
       id = R.id.btnQuickClearCache;
       ImageButton btnQuickClearCache = ViewBindings.findChildViewById(rootView, id);
       if (btnQuickClearCache == null) {
+        break missingId;
+      }
+
+      id = R.id.btnServerModule;
+      LinearLayout btnServerModule = ViewBindings.findChildViewById(rootView, id);
+      if (btnServerModule == null) {
         break missingId;
       }
 
@@ -328,11 +360,12 @@ public final class ActivityMainBinding implements ViewBinding {
       }
 
       return new ActivityMainBinding((RelativeLayout) rootView, bottomToolbarContainer,
-          btnDevToolsToggle, btnExitFullscreen, btnFloatingCopyErrors, btnGameBoostToggle,
-          btnGoOrReload, btnHardReload, btnIngeHub, btnNavBack, btnNavForward, btnNavHome,
-          btnNavMenu, btnQuickClearCache, btnSuperVelozToggle, etUrlInput, floatingDevBar,
-          ivSecurityStatus, mainWebView, progressBarLoading, rootLayout, topToolbarContainer,
-          tvDevBadgeErrors, tvFloatingErrorText, tvGameBoostLabel, tvSuperVelozLabel, webContainer);
+          btnCloudDriveModule, btnDevToolsToggle, btnExitFullscreen, btnFloatingCopyErrors,
+          btnGameBoostToggle, btnGoOrReload, btnHardReload, btnIngeHub, btnNavBack, btnNavForward,
+          btnNavHome, btnNavMenu, btnOfficeModule, btnQuickClearCache, btnServerModule,
+          btnSuperVelozToggle, etUrlInput, floatingDevBar, ivSecurityStatus, mainWebView,
+          progressBarLoading, rootLayout, topToolbarContainer, tvDevBadgeErrors,
+          tvFloatingErrorText, tvGameBoostLabel, tvSuperVelozLabel, webContainer);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

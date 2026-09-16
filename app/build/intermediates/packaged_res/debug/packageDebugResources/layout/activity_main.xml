@@ -18,136 +18,224 @@
         android:background="@drawable/bg_glass_bar"
         android:elevation="8dp">
 
-        <!-- Top Modes Status Row -->
-        <LinearLayout
+        <!-- Top Modules & Performance Bar (Scrollable for compact screens) -->
+        <HorizontalScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
+            android:scrollbars="none"
             android:layout_marginBottom="6dp">
 
-            <!-- IngeHub launcher -->
             <LinearLayout
-                android:id="@+id/btnIngeHub"
                 android:layout_width="wrap_content"
-                android:layout_height="28dp"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:paddingHorizontal="8dp"
-                android:background="@drawable/bg_aqua_pill"
-                android:clickable="true"
-                android:focusable="true">
+                android:gravity="center_vertical">
 
-                <ImageView
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:src="@drawable/ic_hub"
-                    android:tint="@color/aqua_cyan" />
-
-                <TextView
+                <!-- IngeHub launcher -->
+                <LinearLayout
+                    android:id="@+id/btnIngeHub"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:text="IngeHub"
-                    android:textColor="@color/aqua_cyan"
-                    android:textSize="11sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
+                    android:layout_height="28dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="8dp"
+                    android:layout_marginEnd="5dp"
+                    android:background="@drawable/bg_aqua_pill"
+                    android:clickable="true"
+                    android:focusable="true">
 
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_weight="1" />
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:src="@drawable/logo" />
 
-            <!-- Super Veloz Toggle -->
-            <LinearLayout
-                android:id="@+id/btnSuperVelozToggle"
-                android:layout_width="wrap_content"
-                android:layout_height="28dp"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:paddingHorizontal="8dp"
-                android:layout_marginEnd="6dp"
-                android:background="@drawable/bg_turbo_badge"
-                android:clickable="true"
-                android:focusable="true">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:text="IngeHub"
+                        android:textColor="@color/aqua_cyan"
+                        android:textSize="11sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
 
-                <ImageView
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:src="@drawable/ic_bolt"
-                    android:tint="@color/turbo_yellow" />
-
-                <TextView
-                    android:id="@+id/tvSuperVelozLabel"
+                <!-- OfficeFreeToAndroid Module Launcher -->
+                <LinearLayout
+                    android:id="@+id/btnOfficeModule"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:text="Turbo: ON"
-                    android:textColor="@color/text_primary"
-                    android:textSize="11sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
+                    android:layout_height="28dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="8dp"
+                    android:layout_marginEnd="5dp"
+                    android:background="@drawable/bg_aqua_button"
+                    android:clickable="true"
+                    android:focusable="true">
 
-            <!-- GameBoost Toggle -->
-            <LinearLayout
-                android:id="@+id/btnGameBoostToggle"
-                android:layout_width="wrap_content"
-                android:layout_height="28dp"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:paddingHorizontal="8dp"
-                android:layout_marginEnd="6dp"
-                android:background="@drawable/bg_game_badge"
-                android:clickable="true"
-                android:focusable="true">
+                    <ImageView
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:src="@drawable/ic_description"
+                        android:tint="@color/text_primary" />
 
-                <ImageView
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:src="@drawable/ic_gamepad"
-                    android:tint="@color/game_emerald" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:text="Office"
+                        android:textColor="@color/text_primary"
+                        android:textSize="11sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
 
-                <TextView
-                    android:id="@+id/tvGameBoostLabel"
+                <!-- Local Server Module Launcher -->
+                <LinearLayout
+                    android:id="@+id/btnServerModule"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:text="Gaming"
-                    android:textColor="@color/text_primary"
-                    android:textSize="11sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
+                    android:layout_height="28dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="8dp"
+                    android:layout_marginEnd="5dp"
+                    android:background="@drawable/bg_game_badge"
+                    android:clickable="true"
+                    android:focusable="true">
 
-            <!-- DevTools Toggle -->
-            <LinearLayout
-                android:id="@+id/btnDevToolsToggle"
-                android:layout_width="wrap_content"
-                android:layout_height="28dp"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:paddingHorizontal="8dp"
-                android:background="@drawable/bg_dev_badge"
-                android:clickable="true"
-                android:focusable="true">
+                    <ImageView
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:src="@drawable/ic_dns"
+                        android:tint="@color/game_emerald" />
 
-                <ImageView
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:src="@drawable/ic_bug"
-                    android:tint="@color/dev_purple" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:text="Servidor"
+                        android:textColor="@color/text_primary"
+                        android:textSize="11sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
 
-                <TextView
-                    android:id="@+id/tvDevBadgeErrors"
+                <!-- Cloud Drive Launcher -->
+                <LinearLayout
+                    android:id="@+id/btnCloudDriveModule"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:text="Dev"
-                    android:textColor="@color/text_primary"
-                    android:textSize="11sp"
-                    android:textStyle="bold" />
+                    android:layout_height="28dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="8dp"
+                    android:layout_marginEnd="5dp"
+                    android:background="@drawable/bg_aqua_pill"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <ImageView
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:src="@drawable/ic_cloud"
+                        android:tint="@color/aqua_cyan" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:text="Drive"
+                        android:textColor="@color/aqua_cyan"
+                        android:textSize="11sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <!-- Super Veloz Toggle -->
+                <LinearLayout
+                    android:id="@+id/btnSuperVelozToggle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="28dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="8dp"
+                    android:layout_marginEnd="5dp"
+                    android:background="@drawable/bg_turbo_badge"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:src="@drawable/ic_bolt"
+                        android:tint="@color/turbo_yellow" />
+
+                    <TextView
+                        android:id="@+id/tvSuperVelozLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:text="Turbo"
+                        android:textColor="@color/text_primary"
+                        android:textSize="11sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <!-- GameBoost Toggle -->
+                <LinearLayout
+                    android:id="@+id/btnGameBoostToggle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="28dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="8dp"
+                    android:layout_marginEnd="5dp"
+                    android:background="@drawable/bg_game_badge"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:src="@drawable/ic_gamepad"
+                        android:tint="@color/game_emerald" />
+
+                    <TextView
+                        android:id="@+id/tvGameBoostLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:text="Gaming"
+                        android:textColor="@color/text_primary"
+                        android:textSize="11sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <!-- DevTools Toggle -->
+                <LinearLayout
+                    android:id="@+id/btnDevToolsToggle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="28dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="8dp"
+                    android:background="@drawable/bg_dev_badge"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:src="@drawable/ic_bug"
+                        android:tint="@color/dev_purple" />
+
+                    <TextView
+                        android:id="@+id/tvDevBadgeErrors"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:text="Dev"
+                        android:textColor="@color/text_primary"
+                        android:textSize="11sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
+        </HorizontalScrollView>
 
         <!-- URL Search Row -->
         <LinearLayout
@@ -181,7 +269,7 @@
                 android:imeOptions="actionGo"
                 android:singleLine="true" />
 
-            <!-- Quick Purge Cache Button right inside address bar -->
+            <!-- Quick Purge Cache Button inside search bar -->
             <ImageButton
                 android:id="@+id/btnQuickClearCache"
                 android:layout_width="32dp"

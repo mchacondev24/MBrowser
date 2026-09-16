@@ -1,107 +1,108 @@
 # MBrowser 💧⚡
-> **Navegador Android de Alto Rendimiento: Modo Super Hiper Veloz, GameBoost, DevTools con Inspector de Errores y Estética Glassmorphism Aero Aqua.**
+> **Super-App Todo-en-Uno para Android:** Navegador Web de Rendimiento Extremo (GeckoView / Waterfox), Suite Ofimática Completa con Gemini AI (OfficeFreeToAndroid), Servidor Web Local & Base de Datos (ApacheMysqlAndroid_Server), Google Drive Cloud Sync y Ecosistema `ingemaxwellchacon.com`.
 
 ---
 
-## 🌟 Descripción General
+## 🌟 Visión General
 
-**MBrowser** es un navegador móvil para Android diseñado bajo la arquitectura de alto rendimiento de Mozilla / Waterfox (GeckoView / WebKit Engine architecture) y optimizado para ofrecer una experiencia ultra veloz, privada, personalizable e inmersiva.
-
-Integra directamente el portafolio del desarrollador ([ingemaxwellchacon.com](https://ingemaxwellchacon.com)), herramientas para programadores web, y un módulo especializado para **Cloud Gaming** y juegos de baja latencia.
+**MBrowser** es una plataforma móvil avanzada que revoluciona el concepto de navegador web en Android. No solo ofrece una experiencia de navegación ultrarrápida, privada y libre de rastreadores, sino que se convierte en un centro de productividad y desarrollo completo: permite redactar y editar documentos ofimáticos con asistencia de inteligencia artificial (Gemini AI), ejecutar un servidor web completo (Apache + PHP) con bases de datos relacionales (MySQL, SQLite, PostgreSQL) directamente en el dispositivo móvil con soporte de red local (LAN), y respaldar todo en Google Drive.
 
 ---
 
-## 🚀 Novedades y Características Principales
-
-### 1. ⚡ Modo Super Hiper Veloz (Core Performance & Privacy)
-- **Bloqueo Nativo de Rastreadores y Publicidad:** Intercepta peticiones de red a nivel de motor contra más de 40 dominios de telemetría, analíticas intrusivas, píxeles de seguimiento y scripts publicitarios pesados.
-- **Ahorro Extremo de Ancho de Banda y RAM:** Omisión de scripts no esenciales antes de que consuman CPU.
-- **Aceleración por Hardware:** Renderizado GPU activo para máxima fluidez a 60/120 FPS.
-
-### 2. 🎮 Modo Gaming & Cloud Play ("MBrowser GameBoost")
-- **Reducción de Latencia y Ping:** Priorización de tráfico WebSockets y streams de datos en tiempo real (esencial para juegos multijugador y Cloud Gaming).
-- **GPU Turbo & Forzado de WebGL/WebGPU:** Maximiza la aceleración gráfica evitando tirones en juegos HTML5, Canvas y emuladores web.
-- **Pantalla Completa Inmersiva:** Oculta automáticamente todas las barras de sistema y navegación para una experiencia total sin distracciones.
-- **Lanzador Rápido:** Accesos directos a plataformas como Xbox Cloud Gaming, GeForce Now y Poki.
-
-### 3. 🛠️ Modo Desarrollador, Inspector de Errores & Limpieza de Caché
-- **Purga Instantánea de Caché:** Botón dedicado para borrar la caché de disco, memoria, cookies y WebStorage al instante con un solo toque, evitando el problema de no ver reflejados los cambios al programar.
-- **Hard Reload (Bypass Cache):** Recarga forzada saltándose la caché HTTP.
-- **Inspector de Consola en Tiempo Real:** Captura y categoriza errores de JavaScript (`console.error`, excepciones no capturadas y promesas rechazadas).
-- **Copiar Errores en 1 Toque:** Botón para copiar inmediatamente todos los logs y mensajes de error al portapapeles con número de línea y archivo de origen.
-
-### 4. 💎 Estética Retro-Futurista (Windows Vista Aero & Mac Aqua Glassmorphism)
-- **Barras de Navegación Traslúcidas:** Efectos de cristal con reflejos especulares, bordes luminosos y gradientes Aqua Blue / Aero Vista.
-- **Botonería de Gel Estilizada:** Botones con brillo superior y micro-animaciones fluidas.
-- **Paleta de Colores Curada:** Contrastes profundos en azul noche, cian brillante, esmeralda gaming y acentos neón.
-
-### 5. 🌐 IngeHub & Página de Inicio Integrada
-- **Página de Inicio por Defecto:** Configurada hacia `https://ingemaxwellchacon.com`.
-- **IngeHub:** Panel deslizante lateral con acceso al portafolio oficial del creador, utilidades de desarrollo y estadísticas de rastreadores bloqueados en tiempo real.
-
----
-
-## 🏗️ Arquitectura del Proyecto
+## 🏛️ Módulos Integrados y Arquitectura
 
 ```
-MBrowser/
-├── app/
-│   ├── src/
-│   │   ├── main/
-│   │   │   ├── java/com/maxwell/mbrowser/
-│   │   │   │   ├── MainActivity.kt               # Controlador principal de navegación
-│   │   │   │   ├── engine/
-│   │   │   │   │   └── AdTrackerBlocker.kt       # Motor de intercepción y bloqueo de trackers
-│   │   │   │   ├── devtools/
-│   │   │   │   │   ├── DevToolsManager.kt        # Gestión de caché, consola y copiado de errores
-│   │   │   │   │   └── ConsoleLogItem.kt         # Modelo de datos de logs
-│   │   │   │   ├── gameboost/
-│   │   │   │   │   └── GameBoostManager.kt       # Aceleración GPU y pantalla completa inmersiva
-│   │   │   │   ├── hub/
-│   │   │   │   │   └── IngeHubManager.kt         # Panel de portafolio y accesos directos
-│   │   │   │   └── dialogs/
-│   │   │   │       └── AboutDialog.kt            # Diálogo y licencias MPL 2.0
-│   │   │   ├── res/
-│   │   │   │   ├── layout/                       # Diseños XML (Aero & Aqua Glass UI)
-│   │   │   │   ├── drawable/                     # Drawables de cristal, gradientes e iconos vectoriales
-│   │   │   │   └── values/                       # Colores, temas y cadenas
-│   │   │   └── AndroidManifest.xml               # Permisos y configuración de aceleración por hardware
-│   │   └── build.gradle.kts                      # Configuración de dependencias de la app
-├── gradle/wrapper/                               # Gradle Wrapper (8.11.1)
-├── build.gradle.kts                              # Configuración raíz de plugins
-├── settings.gradle.kts                           # Repositorios y módulos
-└── README.md                                     # Documentación técnica
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                             MBrowser Super-App                              │
+│                      (Estética Aero Aqua Glassmorphism)                     │
+└───────┬───────────────┬───────────────────┬─────────────────┬───────────────┘
+        │               │                   │                 │
+┌───────▼──────┐ ┌──────▼────────────┐ ┌────▼───────────┐ ┌───▼─────────────┐
+│  Navegador   │ │ OfficeFree        │ │ Servidor Local │ │  Cloud Drive &  │
+│  GeckoView   │ │ ToAndroid + AI    │ │ Apache & DBs   │ │  IngeHub        │
+├──────────────┤ ├───────────────────┤ ├────────────────┤ ├─────────────────┤
+│• Turbo Mode  │ │• Writer (DOCX/ODT)│ │• Apache 2.4    │ │• Google Drive   │
+│• GameBoost   │ │• Calc (XLSX/ODS)  │ │• PHP 8.0 - 8.3 │ │  OAuth Sync     │
+│• DevTools JS │ │• Impress (PPTX)   │ │• MySQL 8.0     │ │• Portafolio     │
+│• AdBlocker   │ │• PDF Preview      │ │• PostgreSQL    │ │  ingemaxwell    │
+│• Hard Reload │ │• Gemini AI Assist │ │• Soporte LAN   │ │  chacon.com     │
+└──────────────┘ └───────────────────┘ └────────────────┘ └─────────────────┘
 ```
 
 ---
 
-## ⚙️ Requisitos de Compilación
-
-- **Java Development Kit (JDK):** JDK 17 o superior
-- **Android SDK:** API Level 35 (Android 15)
-- **Min SDK:** API Level 26 (Android 8.0 Oreo)
-- **Gradle:** 8.11.1
+## 🚀 1. Núcleo del Navegador Web (GeckoView / Waterfox)
+* **Modo Super Hiper Veloz (Turbo):** Bloqueo nativo ultra agresivo a nivel de red contra más de 40 dominios de rastreo, analíticas pesadas y anuncios invasivos.
+* **Modo Gaming & Cloud Play (GameBoost):** Aceleración forzada por GPU (Hardware layer), WebGL, optimización de baja latencia en WebSockets/WebRTC para Xbox Cloud Gaming, GeForce Now y emuladores web con pantalla completa inmersiva.
+* **Inspector de Consola & Limpiador de Caché en Vivo:** Captura de errores JS con botón de **copiado en 1 toque** y botón de **Purga Total de Caché (Hard Reload)** para desarrolladores web.
+* **Diseño Retro-Futurista Glassmorphism:** Transparencias, reflejos de cristal y efectos inspirados en Windows Vista Aero y Mac Aqua.
 
 ---
 
-## 📦 Instrucciones para Compilar el APK
+## 📄 2. Módulo Ofimático Integrado (OfficeFreeToAndroid)
+* **Suite Completa para Android:** Basada en OpenOffice / LibreOffice, adaptada y migrada para Android por **Maxwell Chacón**.
+* **Aplicaciones Incluidas:**
+  * **Writer:** Creación y edición de documentos de texto (`.docx`, `.odt`, `.txt`).
+  * **Calc:** Hojas de cálculo avanzadas (`.xlsx`, `.ods`, `.csv`).
+  * **Impress:** Presentaciones multimedia (`.pptx`, `.odp`).
+  * **Visor PDF & Impresión:** Vista previa y exportación directa a formato PDF.
+* **Gemini AI Assistant Integrado:** Asistente inteligente para resumir textos largos, mejorar redacción, formular cálculos complejos de hojas de cálculo y traducir contenido al instante.
 
-Para compilar el archivo APK en modo Debug:
+---
+
+## 🖥️ 3. Módulo de Servidor Local & Bases de Datos (ApacheMysqlAndroid_Server)
+* **Stack Web Portable en Android:** Servidor local portable desarrollado por **Maxwell Chacón**.
+* **Servicios Gestionados:**
+  * **Apache HTTP Server (v2.4)** en puerto `8080`.
+  * **PHP Engine (v8.0 - v8.3)** con soporte FPM / CLI.
+  * **MySQL Database (v8.0)** en puerto `3306`.
+  * **PostgreSQL (v16.2)** en puerto `5432` y **SQLite (v3.45)** embebido.
+* **Soporte LAN:** Enrutamiento IP local para permitir el acceso a las aplicaciones web desde cualquier dispositivo conectado a la misma red WiFi.
+* **Integración Directa:** Botón de un toque para abrir `http://localhost:8080` directamente en una pestaña de MBrowser.
+
+---
+
+## ☁️ 4. Capa Cloud, Google Drive & Monetización
+* **Google Drive Connector:** Autenticación y sincronización en la nube de documentos ofimáticos y respaldos de datos del navegador.
+* **IngeHub & Página de Inicio:** Integración por defecto hacia `https://ingemaxwellchacon.com` como panel central de proyectos, herramientas y monetización.
+
+---
+
+## 📜 5. Licenciamiento, Créditos y Atribuciones Open Source
+
+Este proyecto cumple estrictamente con las licencias de código abierto aplicables:
+
+1. **Waterfox / GeckoView (`BrowserWorks/waterfox`):**
+   * Licencia: **Mozilla Public License 2.0 (MPL-2.0)**.
+   * Reconocimiento a Mozilla y al proyecto Waterfox por el motor de renderizado móvil.
+2. **OfficeFreeToAndroid (`mchacondev24/OfficeFreeToAndroid`):**
+   * Desarrollado y migrado a Android por **Maxwell Chacón**.
+   * Basado en las tecnologías de OpenOffice / LibreOffice bajo licencias Apache 2.0, LGPL 3.0 y MPL 2.0.
+3. **ApacheMysqlAndroid_Server (`mchacondev24/ApacheMysqlAndroid_Server`):**
+   * Desarrollado para Android por **Maxwell Chacón**.
+   * Servidor portable y motores de base de datos bajo licencias Apache 2.0, GPL y MIT.
+4. **Google Drive API & Gemini AI:**
+   * Servicios en la nube para sincronización e inteligencia artificial.
+
+---
+
+## 📦 Compilación y Generación del APK
+
+### Requisitos:
+* **JDK:** Java 17+
+* **Android SDK:** API Level 35 (Android 15)
+* **Min SDK:** API Level 26 (Android 8.0 Oreo)
+* **Gradle:** 8.11.1
+
+### Compilar APK Debug:
 ```bash
 ./gradlew assembleDebug
 ```
-El archivo generado se ubicará en:
+Ubicación del APK generado:
 `app/build/outputs/apk/debug/app-debug.apk`
-
-Para compilar el APK de Release:
-```bash
-./gradlew assembleRelease
-```
 
 ---
 
-## 📜 Licencia y Reconocimientos
-
-Este proyecto está licenciado bajo la **Mozilla Public License Version 2.0 (MPL-2.0)**.
-- Reconocimiento a Mozilla y el proyecto Waterfox (`BrowserWorks/waterfox`) por la base de arquitectura de navegación móvil y GeckoView.
-- Desarrollado por **Maxwell Chacón** ([ingemaxwellchacon.com](https://ingemaxwellchacon.com)).
+## 🌐 Repositorio Oficial en GitHub
+* **URL:** **[https://github.com/mchacondev24/MBrowser](https://github.com/mchacondev24/MBrowser)**
+* **Autor:** **Maxwell Chacón** ([ingemaxwellchacon.com](https://ingemaxwellchacon.com))

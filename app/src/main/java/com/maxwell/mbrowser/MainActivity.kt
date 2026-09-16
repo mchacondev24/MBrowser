@@ -29,6 +29,8 @@ import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
+import com.maxwell.mbrowser.cloud.CloudDriveDialog
 import com.maxwell.mbrowser.databinding.ActivityMainBinding
 import com.maxwell.mbrowser.devtools.ConsoleLogItem
 import com.maxwell.mbrowser.devtools.DevToolsManager
@@ -37,6 +39,8 @@ import com.maxwell.mbrowser.dialogs.AboutDialog
 import com.maxwell.mbrowser.engine.AdTrackerBlocker
 import com.maxwell.mbrowser.gameboost.GameBoostManager
 import com.maxwell.mbrowser.hub.IngeHubManager
+import com.maxwell.mbrowser.office.OfficeViewerDialog
+import com.maxwell.mbrowser.server.LocalServerPanelDialog
 
 class MainActivity : AppCompatActivity() {
 
@@ -216,6 +220,23 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        // OfficeFreeToAndroid Module Button
+        binding.btnOfficeModule.setOnClickListener {
+            OfficeViewerDialog.showSuiteHub(this, lifecycleScope)
+        }
+
+        // Local Server Module Button
+        binding.btnServerModule.setOnClickListener {
+            LocalServerPanelDialog.show(this) { url ->
+                loadUrl(url)
+            }
+        }
+
+        // Cloud Drive Module Button
+        binding.btnCloudDriveModule.setOnClickListener {
+            CloudDriveDialog.show(this)
+        }
+
         // Super Veloz Mode Toggle
         binding.btnSuperVelozToggle.setOnClickListener {
             AdTrackerBlocker.isEnabled = !AdTrackerBlocker.isEnabled
@@ -347,23 +368,29 @@ class MainActivity : AppCompatActivity() {
     private fun showMainMenu() {
         val options = arrayOf(
             "🏠 Ir a Inicio (ingemaxwellchacon.com)",
+            "📄 Suite Ofimática (Writer, Calc, Impress, AI)",
+            "🖥️ Servidor Local (Apache, PHP, MySQL, Postgres)",
+            "☁️ Google Drive & Respaldo Cloud",
             "🧹 Limpiar Todo el Caché y Datos",
             "🚀 Modo Super Hiper Veloz (${if (AdTrackerBlocker.isEnabled) "Activo" else "Inactivo"})",
             "🎮 Modo Gaming & Cloud Play",
             "🛠️ Abrir Consola / Inspector de Errores",
-            "ℹ️ Acerca de MBrowser & Licencias MPL 2.0"
+            "ℹ️ Acerca de MBrowser & Atribuciones"
         )
 
         AlertDialog.Builder(this, R.style.Theme_MBrowser_Dialog)
-            .setTitle("Menú de MBrowser")
+            .setTitle("Menú de MBrowser All-in-One")
             .setItems(options) { _, which ->
                 when (which) {
                     0 -> loadUrl(defaultHomeUrl)
-                    1 -> DevToolsManager.clearCache(this, webView, showToast = true)
-                    2 -> binding.btnSuperVelozToggle.performClick()
-                    3 -> toggleGameBoostMode()
-                    4 -> DevToolsManager.showDevToolsDialog(this, webView)
-                    5 -> AboutDialog.show(this)
+                    1 -> OfficeViewerDialog.showSuiteHub(this, lifecycleScope)
+                    2 -> LocalServerPanelDialog.show(this) { url -> loadUrl(url) }
+                    3 -> CloudDriveDialog.show(this)
+                    4 -> DevToolsManager.clearCache(this, webView, showToast = true)
+                    5 -> binding.btnSuperVelozToggle.performClick()
+                    6 -> toggleGameBoostMode()
+                    7 -> DevToolsManager.showDevToolsDialog(this, webView)
+                    8 -> AboutDialog.show(this)
                 }
             }
             .show()
