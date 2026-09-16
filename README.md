@@ -1,6 +1,8 @@
 # MBrowser 💧⚡
 > **Super-App Todo-en-Uno para Android:** Navegador Web de Rendimiento Extremo (GeckoView / Waterfox), Suite Ofimática Completa con Gemini AI (OfficeFreeToAndroid), Servidor Web Local & Base de Datos (ApacheMysqlAndroid_Server), Google Drive Cloud Sync y Ecosistema `ingemaxwellchacon.com`.
 
+> 🚧 **Estado:** **Versión en Desarrollo Activo** — Actualmente trabajando en ajustes, optimizaciones y mejoras continuas.
+
 ---
 
 ## 🌟 Visión General
