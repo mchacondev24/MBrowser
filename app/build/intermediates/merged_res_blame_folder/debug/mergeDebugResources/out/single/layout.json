@@ -1,22 +1,30 @@
 [
     {
-        "merged": "com.maxwell.mbrowser.app-mergeDebugResources-34:/layout/activity_main.xml",
-        "source": "com.maxwell.mbrowser.app-main-37:/layout/activity_main.xml"
+        "merged": "C:\\Users\\Maxwell Chacón\\.gradle\\daemon\\8.11.1\\com.maxwell.mbrowser.app-mergeDebugResources-34:\\layout\\activity_main.xml",
+        "source": "C:\\Users\\Maxwell Chacón\\.gradle\\daemon\\8.11.1\\com.maxwell.mbrowser.app-main-37:\\layout\\activity_main.xml"
+    },
+    {
+        "merged": "C:\\Users\\Maxwell Chacón\\.gradle\\daemon\\8.11.1\\com.maxwell.mbrowser.app-mergeDebugResources-34:\\layout\\sheet_ingehub.xml",
+        "source": "C:\\Users\\Maxwell Chacón\\.gradle\\daemon\\8.11.1\\com.maxwell.mbrowser.app-main-37:\\layout\\sheet_ingehub.xml"
+    },
+    {
+        "merged": "C:\\Users\\Maxwell Chacón\\.gradle\\daemon\\8.11.1\\com.maxwell.mbrowser.app-mergeDebugResources-34:\\layout\\dialog_about.xml",
+        "source": "C:\\Users\\Maxwell Chacón\\.gradle\\daemon\\8.11.1\\com.maxwell.mbrowser.app-main-37:\\layout\\dialog_about.xml"
+    },
+    {
+        "merged": "C:\\Users\\Maxwell Chacón\\.gradle\\daemon\\8.11.1\\com.maxwell.mbrowser.app-mergeDebugResources-34:\\layout\\dialog_devtools.xml",
+        "source": "C:\\Users\\Maxwell Chacón\\.gradle\\daemon\\8.11.1\\com.maxwell.mbrowser.app-main-37:\\layout\\dialog_devtools.xml"
     },
     {
         "merged": "com.maxwell.mbrowser.app-mergeDebugResources-34:/layout/sheet_ingehub.xml",
         "source": "com.maxwell.mbrowser.app-main-37:/layout/sheet_ingehub.xml"
     },
     {
-        "merged": "com.maxwell.mbrowser.app-mergeDebugResources-34:/layout/item_console_log.xml",
-        "source": "com.maxwell.mbrowser.app-main-37:/layout/item_console_log.xml"
+        "merged": "C:\\Users\\Maxwell Chacón\\.gradle\\daemon\\8.11.1\\com.maxwell.mbrowser.app-mergeDebugResources-34:\\layout\\item_console_log.xml",
+        "source": "C:\\Users\\Maxwell Chacón\\.gradle\\daemon\\8.11.1\\com.maxwell.mbrowser.app-main-37:\\layout\\item_console_log.xml"
     },
     {
         "merged": "com.maxwell.mbrowser.app-mergeDebugResources-34:/layout/dialog_about.xml",
         "source": "com.maxwell.mbrowser.app-main-37:/layout/dialog_about.xml"
-    },
-    {
-        "merged": "com.maxwell.mbrowser.app-mergeDebugResources-34:/layout/dialog_devtools.xml",
-        "source": "com.maxwell.mbrowser.app-main-37:/layout/dialog_devtools.xml"
     }
 ]
