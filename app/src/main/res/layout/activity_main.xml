@@ -232,7 +232,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="4dp"
-                        android:text="Dev"
+                        android:text="Consola"
                         android:textColor="@color/text_primary"
                         android:textSize="12sp"
                         android:textStyle="bold" />
@@ -323,47 +323,7 @@
             android:layout_height="match_parent" />
     </FrameLayout>
 
-    <!-- Floating DevTools Error Notification Bar -->
-    <LinearLayout
-        android:id="@+id/floatingDevBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/bottomToolbarContainer"
-        android:layout_marginHorizontal="12dp"
-        android:layout_marginBottom="8dp"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:padding="8dp"
-        android:background="@drawable/bg_glass_card"
-        android:visibility="gone"
-        android:elevation="12dp">
 
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:src="@drawable/ic_bug"
-            android:tint="@color/dev_error_red" />
-
-        <TextView
-            android:id="@+id/tvFloatingErrorText"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginStart="8dp"
-            android:text="2 errores JS detectados"
-            android:textColor="@color/text_primary"
-            android:textSize="12sp" />
-
-        <Button
-            android:id="@+id/btnFloatingCopyErrors"
-            android:layout_width="wrap_content"
-            android:layout_height="32dp"
-            android:background="@drawable/bg_aqua_button"
-            android:text="@string/devtools_copy_errors"
-            android:textColor="@color/text_primary"
-            android:textSize="11sp"
-            android:paddingHorizontal="10dp" />
-    </LinearLayout>
 
     <!-- Floating Fullscreen Exit Trigger for GameBoost mode -->
     <ImageButton

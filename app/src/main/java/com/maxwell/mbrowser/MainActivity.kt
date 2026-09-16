@@ -297,23 +297,9 @@ class MainActivity : AppCompatActivity() {
             toggleGameBoostMode(forceDisable = true)
         }
 
-        // DevTools Dialog Toggle
+        // Consola / DevTools Dialog Toggle
         binding.btnDevToolsToggle.setOnClickListener {
             DevToolsManager.showDevToolsDialog(this, webView)
-        }
-
-        // Floating DevTools Error Bar
-        binding.floatingDevBar.setOnClickListener {
-            DevToolsManager.showDevToolsDialog(this, webView)
-        }
-
-        binding.btnFloatingCopyErrors.setOnClickListener {
-            val errorsText = DevToolsManager.getAllErrorsAsText()
-            DevToolsManager.copyToClipboard(
-                this,
-                errorsText,
-                getString(R.string.devtools_errors_copied)
-            )
         }
 
         // Bottom Navigation Bar Buttons
@@ -339,17 +325,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupDevToolsObserver() {
+        // Quietly logs JavaScript bugs into the Console badge without intrusive floating popups
         DevToolsManager.onLogsUpdatedListener = { errorCount ->
             runOnUiThread {
                 if (errorCount > 0) {
-                    binding.tvDevBadgeErrors.text = "Dev ($errorCount)"
+                    binding.tvDevBadgeErrors.text = "Consola ($errorCount)"
                     binding.tvDevBadgeErrors.setTextColor(ContextCompat.getColor(this, R.color.dev_error_red))
-                    binding.floatingDevBar.visibility = View.VISIBLE
-                    binding.tvFloatingErrorText.text = "$errorCount error(es) JavaScript detectados"
                 } else {
-                    binding.tvDevBadgeErrors.text = "Dev"
+                    binding.tvDevBadgeErrors.text = "Consola"
                     binding.tvDevBadgeErrors.setTextColor(ContextCompat.getColor(this, R.color.text_primary))
-                    binding.floatingDevBar.visibility = View.GONE
                 }
             }
         }
