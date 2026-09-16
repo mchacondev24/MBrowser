@@ -2,6 +2,7 @@
 <resources>
     <!-- Aero & Aqua Glass Primary Palette -->
     <color name="aero_bg_dark">#090F16</color>
+    <color name="bg_dark_navy">#090F16</color>
     <color name="aero_glass_surface">#CC0D1B2A</color>
     <color name="aero_glass_surface_light">#E6152A42</color>
     <color name="aero_glass_border">#5558A6FF</color>

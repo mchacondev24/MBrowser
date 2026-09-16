@@ -71,3 +71,15 @@ tasks.withType<Test> {
     useJUnit()
     jvmArgs("-Dfile.encoding=UTF-8")
 }
+
+tasks.register<JavaExec>("runUnitTests") {
+    dependsOn("compileDebugUnitTestKotlin")
+    mainClass.set("com.maxwell.mbrowser.TestRunner")
+    classpath = files(
+        android.bootClasspath,
+        configurations.getByName("debugUnitTestRuntimeClasspath"),
+        tasks.named("compileDebugKotlin").get().outputs.files,
+        tasks.named("compileDebugUnitTestKotlin").get().outputs.files
+    )
+    jvmArgs("-Dfile.encoding=UTF-8")
+}

@@ -20,6 +20,7 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -44,12 +45,25 @@ class MainActivity : AppCompatActivity() {
     private lateinit var webView: WebView
     private val speedDialHomeUrl = "file:///android_asset/newtab.html"
 
+    private var pendingFilePickerCallback: ((android.net.Uri) -> Unit)? = null
+    private val filePickerLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
+        if (uri != null) {
+            pendingFilePickerCallback?.invoke(uri)
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         webView = binding.mainWebView
+
+        // Set file import handler for Apache Server htdocs
+        LocalServerPanelDialog.setFileImportHandler { callback ->
+            pendingFilePickerCallback = callback
+            filePickerLauncher.launch("*/*")
+        }
 
         setupWindowInsets()
         setupWebView()
@@ -293,7 +307,7 @@ class MainActivity : AppCompatActivity() {
             toggleGameBoostMode()
         }
 
-        binding.btnExitFullscreen.setOnClickListener {
+        binding.layoutGameModeExitBar.setOnClickListener {
             toggleGameBoostMode(forceDisable = true)
         }
 
@@ -339,8 +353,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun toggleGameBoostMode(forceDisable: Boolean = false) {
-        val target = if (forceDisable) false else !GameBoostManager.isGameModeActive
+    private fun toggleGameBoostMode(forceDisable: Boolean = false, forceEnable: Boolean = false) {
+        val target = if (forceDisable) false else if (forceEnable) true else !GameBoostManager.isGameModeActive
         val active = GameBoostManager.toggleGameMode(this, webView, target)
 
         if (active) {
@@ -348,13 +362,13 @@ class MainActivity : AppCompatActivity() {
             binding.btnGameBoostToggle.setBackgroundResource(R.drawable.bg_game_badge)
             binding.topToolbarContainer.visibility = View.GONE
             binding.bottomToolbarContainer.visibility = View.GONE
-            binding.btnExitFullscreen.visibility = View.VISIBLE
+            binding.layoutGameModeExitBar.visibility = View.VISIBLE
         } else {
             binding.tvGameBoostLabel.text = "Gaming"
             binding.btnGameBoostToggle.setBackgroundResource(R.drawable.bg_aqua_pill)
             binding.topToolbarContainer.visibility = View.VISIBLE
             binding.bottomToolbarContainer.visibility = View.VISIBLE
-            binding.btnExitFullscreen.visibility = View.GONE
+            binding.layoutGameModeExitBar.visibility = View.GONE
         }
     }
 
@@ -451,6 +465,14 @@ class MainActivity : AppCompatActivity() {
         fun openUrl(url: String) {
             runOnUiThread {
                 loadUrl(url)
+            }
+        }
+
+        @JavascriptInterface
+        fun openGame(url: String) {
+            runOnUiThread {
+                loadUrl(url)
+                toggleGameBoostMode(forceEnable = true)
             }
         }
 

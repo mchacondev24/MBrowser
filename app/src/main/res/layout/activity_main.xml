@@ -326,19 +326,45 @@
 
 
     <!-- Floating Fullscreen Exit Trigger for GameBoost mode -->
-    <ImageButton
-        android:id="@+id/btnExitFullscreen"
-        android:layout_width="44dp"
-        android:layout_height="44dp"
+    <LinearLayout
+        android:id="@+id/layoutGameModeExitBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_margin="12dp"
         android:background="@drawable/bg_game_badge"
-        android:src="@drawable/ic_fullscreen"
-        android:tint="@color/text_primary"
-        android:contentDescription="Salir de Pantalla Completa"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="14dp"
+        android:paddingVertical="8dp"
         android:visibility="gone"
-        android:elevation="20dp" />
+        android:elevation="20dp"
+        android:clickable="true"
+        android:focusable="true">
+
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:src="@drawable/ic_gamepad"
+            android:tint="@color/game_emerald" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:layout_marginEnd="6dp"
+            android:text="Dejar de jugar"
+            android:textColor="@color/text_primary"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:src="@drawable/ic_close"
+            android:tint="@color/text_primary" />
+    </LinearLayout>
 
     <!-- Bottom Floating Glass Navigation Bar (Insets handled in MainActivity) -->
     <LinearLayout

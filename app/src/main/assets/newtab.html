@@ -397,25 +397,25 @@
         <!-- Speed Dial: Gaming & Cloud Play -->
         <div class="section-title">🎮 GAMING &amp; CLOUD PLAY</div>
         <div class="speed-dial-grid">
-            <a class="dial-item" onclick="navigate('https://www.xbox.com/play')">
+            <a class="dial-item" onclick="openGame('https://www.xbox.com/play')">
                 <div class="dial-icon" style="background: linear-gradient(135deg, rgba(16, 124, 65, 0.4), rgba(16, 124, 65, 0.7));">
                     🎮
                 </div>
                 <span class="dial-label">Xbox Cloud</span>
             </a>
-            <a class="dial-item" onclick="navigate('https://play.geforcenow.com')">
+            <a class="dial-item" onclick="openGame('https://play.geforcenow.com')">
                 <div class="dial-icon" style="background: linear-gradient(135deg, rgba(118, 185, 0, 0.4), rgba(118, 185, 0, 0.7));">
                     ⚡
                 </div>
                 <span class="dial-label">GeForce NOW</span>
             </a>
-            <a class="dial-item" onclick="navigate('https://www.crazygames.com')">
+            <a class="dial-item" onclick="openGame('https://www.crazygames.com')">
                 <div class="dial-icon" style="background: linear-gradient(135deg, rgba(147, 51, 234, 0.4), rgba(79, 70, 229, 0.6));">
                     🕹️
                 </div>
                 <span class="dial-label">CrazyGames</span>
             </a>
-            <a class="dial-item" onclick="navigate('https://poki.com')">
+            <a class="dial-item" onclick="openGame('https://poki.com')">
                 <div class="dial-icon" style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.4), rgba(16, 185, 129, 0.6));">
                     👾
                 </div>
@@ -424,13 +424,13 @@
         </div>
 
         <!-- Speed Dial: Social, Tech & Portfolio -->
-        <div class="section-title">💼 PRODUCTIVIDAD &amp; REDES</div>
+        <div class="section-title">💼 PRODUCTIVIDAD &amp; HERRAMIENTAS</div>
         <div class="speed-dial-grid">
-            <a class="dial-item" onclick="navigate('https://www.reddit.com')">
-                <div class="dial-icon" style="background: linear-gradient(135deg, rgba(255, 69, 0, 0.3), rgba(255, 69, 0, 0.6));">
-                    🤖
+            <a class="dial-item" onclick="openModule('drive')">
+                <div class="dial-icon" style="background: linear-gradient(135deg, rgba(255, 187, 0, 0.3), rgba(15, 157, 88, 0.4));">
+                    📁
                 </div>
-                <span class="dial-label">Reddit</span>
+                <span class="dial-label">Google Drive</span>
             </a>
             <a class="dial-item" onclick="navigate('https://twitter.com')">
                 <div class="dial-icon" style="background: rgba(0, 0, 0, 0.5);">
@@ -479,6 +479,14 @@
                 window.MBrowserBridge.openUrl(url);
             } else {
                 window.location.href = url;
+            }
+        }
+
+        function openGame(url) {
+            if (window.MBrowserBridge && window.MBrowserBridge.openGame) {
+                window.MBrowserBridge.openGame(url);
+            } else {
+                navigate(url);
             }
         }
 

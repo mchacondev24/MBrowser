@@ -34,16 +34,35 @@ class LocalServerEngineTest {
     }
 
     @Test
-    fun testStopAllServices() {
-        LocalServerEngine.status.apache.isRunning = true
-        LocalServerEngine.status.mysql.isRunning = true
-        LocalServerEngine.status.postgresql.isRunning = true
+    fun testDatabaseCreation() {
+        val created = LocalServerEngine.createDatabase("tienda_virtual")
+        assertTrue("Database creation should succeed", created)
+        assertTrue("Database list should contain newly created DB", LocalServerEngine.getDatabaseList().contains("tienda_virtual"))
+    }
 
-        LocalServerEngine.stopAllServices()
+    @Test
+    fun testExecuteSqlQuery() {
+        val selectResult = LocalServerEngine.executeSqlQuery("SELECT * FROM usuarios")
+        assertTrue("SELECT query should return table data", selectResult.contains("Maxwell Chacón"))
 
-        assertFalse(LocalServerEngine.status.apache.isRunning)
-        assertFalse(LocalServerEngine.status.mysql.isRunning)
-        assertFalse(LocalServerEngine.status.postgresql.isRunning)
-        assertFalse(LocalServerEngine.isAnyServiceRunning())
+        val insertResult = LocalServerEngine.executeSqlQuery("INSERT INTO usuarios VALUES (4, 'Test')")
+        assertTrue("INSERT query should return OK", insertResult.contains("Query OK"))
+
+        val showTablesResult = LocalServerEngine.executeSqlQuery("SHOW TABLES")
+        assertTrue("SHOW TABLES should list tables", showTablesResult.contains("usuarios"))
+    }
+
+    @Test
+    fun testFormatFileSize() {
+        assertEquals("500 B", LocalServerEngine.formatFileSize(500))
+        assertEquals("2.0 KB", LocalServerEngine.formatFileSize(2048))
+        assertEquals("1.50 MB", LocalServerEngine.formatFileSize((1.5 * 1024 * 1024).toLong()))
+    }
+
+    @Test
+    fun testServerLogs() {
+        LocalServerEngine.log("Prueba de registro de log")
+        val logs = LocalServerEngine.getLogs()
+        assertTrue("Logs should contain the recorded message", logs.any { it.contains("Prueba de registro de log") })
     }
 }

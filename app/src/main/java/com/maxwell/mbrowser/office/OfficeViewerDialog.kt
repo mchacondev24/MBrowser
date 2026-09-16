@@ -13,6 +13,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.LifecycleCoroutineScope
 import com.maxwell.mbrowser.R
 import com.maxwell.mbrowser.cloud.GoogleDriveConnector
@@ -22,26 +23,33 @@ import com.maxwell.mbrowser.office.models.OfficeDocument
 import kotlinx.coroutines.launch
 
 /**
- * OfficeViewerDialog - Dedicated Workspace for OfficeFreeToAndroid suite in MBrowser.
+ * OfficeViewerDialog - Dedicated Fullscreen Workspace for OfficeFreeToAndroid suite in MBrowser.
  * Provides instant document creation (Word/Writer, Excel/Calc, PowerPoint/Impress),
- * rich editing, Gemini AI assistant, and direct Google Drive cloud synchronization.
+ * rich editing, Gemini AI assistant, template gallery, and Google Drive cloud synchronization.
  */
 object OfficeViewerDialog {
 
     fun showSuiteHub(context: Context, scope: LifecycleCoroutineScope) {
-        val dialog = Dialog(context, R.style.Theme_MBrowser_Dialog)
+        val dialog = Dialog(context, android.R.style.Theme_Black_NoTitleBar_Fullscreen)
         val view = LayoutInflater.from(context).inflate(R.layout.dialog_office_suite, null)
         dialog.setContentView(view)
-        dialog.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
 
+        val btnBackToBrowsing = view.findViewById<Button>(R.id.btnBackToBrowsing)
         val btnClose = view.findViewById<ImageButton>(R.id.btnCloseOffice)
-        val btnWriter = view.findViewById<Button>(R.id.btnNewWriter)
-        val btnCalc = view.findViewById<Button>(R.id.btnNewCalc)
-        val btnImpress = view.findViewById<Button>(R.id.btnNewImpress)
-        val btnAi = view.findViewById<Button>(R.id.btnAiAssistant)
+        val cardWriter = view.findViewById<LinearLayout>(R.id.cardNewWriter)
+        val cardCalc = view.findViewById<LinearLayout>(R.id.cardNewCalc)
+        val cardImpress = view.findViewById<LinearLayout>(R.id.cardNewImpress)
+        val cardAi = view.findViewById<LinearLayout>(R.id.cardNewAi)
         val layoutDocs = view.findViewById<LinearLayout>(R.id.layoutOfficeDocs)
         val tvEmpty = view.findViewById<TextView>(R.id.tvEmptyOffice)
+        val btnSyncAllDrive = view.findViewById<Button>(R.id.btnSyncAllDrive)
+
+        // Template buttons
+        val btnCv = view.findViewById<Button>(R.id.btnTemplateCv)
+        val btnInvoice = view.findViewById<Button>(R.id.btnTemplateInvoice)
+        val btnPitch = view.findViewById<Button>(R.id.btnTemplatePitch)
+        val btnLetter = view.findViewById<Button>(R.id.btnTemplateLetter)
 
         fun refreshDocList() {
             layoutDocs.removeAllViews()
@@ -71,8 +79,54 @@ object OfficeViewerDialog {
                     }
 
                     item.setOnClickListener {
-                        dialog.dismiss()
-                        showEditor(context, doc, scope)
+                        showEditor(context, doc, scope) {
+                            refreshDocList()
+                        }
+                    }
+
+                    item.setOnLongClickListener {
+                        val options = arrayOf("✏️ Abrir y Editar", "🏷️ Renombrar", "🗑️ Eliminar Documento")
+                        AlertDialog.Builder(context, R.style.Theme_MBrowser_Dialog)
+                            .setTitle(doc.title)
+                            .setItems(options) { _, which ->
+                                when (which) {
+                                    0 -> showEditor(context, doc, scope) { refreshDocList() }
+                                    1 -> {
+                                        val input = EditText(context).apply {
+                                            setText(doc.title)
+                                            setTextColor(context.getColor(R.color.text_primary))
+                                        }
+                                        AlertDialog.Builder(context, R.style.Theme_MBrowser_Dialog)
+                                            .setTitle("Renombrar Documento")
+                                            .setView(input)
+                                            .setPositiveButton("Guardar") { _, _ ->
+                                                val newName = input.text.toString().trim()
+                                                if (newName.isNotEmpty()) {
+                                                    doc.title = newName
+                                                    OfficeSuiteManager.saveDocumentContent(doc, OfficeSuiteManager.readDocumentContent(doc))
+                                                    refreshDocList()
+                                                    Toast.makeText(context, "Documento renombrado.", Toast.LENGTH_SHORT).show()
+                                                }
+                                            }
+                                            .setNegativeButton("Cancelar", null)
+                                            .show()
+                                    }
+                                    2 -> {
+                                        AlertDialog.Builder(context, R.style.Theme_MBrowser_Dialog)
+                                            .setTitle("Eliminar Documento")
+                                            .setMessage("¿Estás seguro de eliminar '${doc.title}'?")
+                                            .setPositiveButton("Eliminar") { _, _ ->
+                                                OfficeSuiteManager.deleteDocument(context, doc.id)
+                                                refreshDocList()
+                                                Toast.makeText(context, "Documento eliminado.", Toast.LENGTH_SHORT).show()
+                                            }
+                                            .setNegativeButton("Cancelar", null)
+                                            .show()
+                                    }
+                                }
+                            }
+                            .show()
+                        true
                     }
 
                     layoutDocs.addView(item)
@@ -82,40 +136,162 @@ object OfficeViewerDialog {
 
         refreshDocList()
 
+        btnBackToBrowsing.setOnClickListener { dialog.dismiss() }
         btnClose.setOnClickListener { dialog.dismiss() }
 
-        btnWriter.setOnClickListener {
+        cardWriter.setOnClickListener {
             val doc = OfficeSuiteManager.createNewDocument(context, "Documento_${System.currentTimeMillis() % 10000}", DocumentType.WRITER)
-            dialog.dismiss()
-            showEditor(context, doc, scope)
+            showEditor(context, doc, scope) { refreshDocList() }
         }
 
-        btnCalc.setOnClickListener {
+        cardCalc.setOnClickListener {
             val doc = OfficeSuiteManager.createNewDocument(context, "Hoja_Calculo_${System.currentTimeMillis() % 10000}", DocumentType.CALC)
-            dialog.dismiss()
-            showEditor(context, doc, scope)
+            showEditor(context, doc, scope) { refreshDocList() }
         }
 
-        btnImpress.setOnClickListener {
+        cardImpress.setOnClickListener {
             val doc = OfficeSuiteManager.createNewDocument(context, "Presentacion_${System.currentTimeMillis() % 10000}", DocumentType.IMPRESS)
-            dialog.dismiss()
-            showEditor(context, doc, scope)
+            showEditor(context, doc, scope) { refreshDocList() }
         }
 
-        btnAi.setOnClickListener {
+        cardAi.setOnClickListener {
             val doc = OfficeSuiteManager.createNewDocument(context, "Borrador_Gemini_AI", DocumentType.WRITER)
-            dialog.dismiss()
-            showEditor(context, doc, scope, autoTriggerAi = true)
+            showEditor(context, doc, scope, autoTriggerAi = true) { refreshDocList() }
+        }
+
+        // Templates
+        btnCv.setOnClickListener {
+            val doc = OfficeSuiteManager.createNewDocument(context, "Curriculum_Vitae", DocumentType.WRITER)
+            OfficeSuiteManager.saveDocumentContent(
+                doc,
+                """
+                # CURRÍCULUM VITAE
+                
+                **Nombre:** [Tu Nombre Completo]
+                **Profesión:** Ingeniero de Software / Desarrollador
+                **Email:** contacto@correo.com | **Teléfono:** +505 0000-0000
+                
+                ---
+                ## 🎯 Perfil Profesional
+                Profesional proactivo con experiencia en desarrollo de aplicaciones Android de alto rendimiento, arquitecturas modernas y soluciones en la nube.
+                
+                ## 💼 Experiencia Laboral
+                - **Líder de Proyecto / Desarrollador Mobile** (2024 - Presente)
+                  - Desarrollo de arquitectura modular y navegación ultrarrápida.
+                  - Integración de inteligencia artificial con Gemini API.
+                
+                ## 🎓 Educación
+                - **Ingeniería en Sistemas / Computación** - Universidad Nacional
+                
+                ## 🛠️ Habilidades Técnicas
+                - Kotlin, Android Jetpack, GeckoView / WebKit
+                - Apache 2.4, PHP, MySQL, SQLite, PostgreSQL
+                - Git, Google Drive API, Clean Architecture
+                """.trimIndent()
+            )
+            showEditor(context, doc, scope) { refreshDocList() }
+        }
+
+        btnInvoice.setOnClickListener {
+            val doc = OfficeSuiteManager.createNewDocument(context, "Presupuesto_Factura", DocumentType.CALC)
+            OfficeSuiteManager.saveDocumentContent(
+                doc,
+                """
+                | Ítem | Descripción | Cantidad | Precio Unitario | Total |
+                |---|---|---|---|---|
+                | 1 | Desarrollo de Módulo Web & Servidor Local | 1 | $500.00 | =C2*D2 |
+                | 2 | Optimización de Rendimiento GameBoost | 1 | $250.00 | =C3*D3 |
+                | 3 | Integración Gemini AI Assistant | 1 | $350.00 | =C4*D4 |
+                |---|---|---|---|---|
+                | **SUBTOTAL** | | | | =SUMA(E2:E4) |
+                | **IVA (15%)** | | | | =E5*0.15 |
+                | **TOTAL FINAL**| | | | =E5+E6 |
+                """.trimIndent()
+            )
+            showEditor(context, doc, scope) { refreshDocList() }
+        }
+
+        btnPitch.setOnClickListener {
+            val doc = OfficeSuiteManager.createNewDocument(context, "Presentacion_Pitch_Deck", DocumentType.IMPRESS)
+            OfficeSuiteManager.saveDocumentContent(
+                doc,
+                """
+                === [DIAPOSITIVA 1: PORTADA] ===
+                # MBrowser & OfficeFreeToAndroid
+                ## La Super-App Todo-en-Uno para Android
+                *Por Maxwell Chacón*
+                
+                ---
+                === [DIAPOSITIVA 2: EL PROBLEMA] ===
+                # ¿Por qué múltiples apps pesadas?
+                - Los usuarios alternan entre navegador, visor ofimático y servidores de desarrollo.
+                - Mayor consumo de batería, RAM y almacenamiento.
+                
+                ---
+                === [DIAPOSITIVA 3: NUESTRA SOLUCIÓN] ===
+                # Suite Integrada y Ultrarrápida
+                - Motor web de rendimiento extremo.
+                - Suite ofimática OpenOffice/LibreOffice completa con IA.
+                - Servidor Apache/PHP/MySQL portable en el bolsillo.
+                """.trimIndent()
+            )
+            showEditor(context, doc, scope) { refreshDocList() }
+        }
+
+        btnLetter.setOnClickListener {
+            val doc = OfficeSuiteManager.createNewDocument(context, "Carta_Formal", DocumentType.WRITER)
+            OfficeSuiteManager.saveDocumentContent(
+                doc,
+                """
+                Ciudad de Managua, 16 de Septiembre de 2026
+                
+                Estimado(a) [Nombre del Destinatario]:
+                
+                Por medio de la presente, me dirijo a usted con el propósito de presentar la suite de desarrollo y productividad MBrowser, diseñada para ofrecer la máxima velocidad, versatilidad y control local de datos en dispositivos móviles.
+                
+                Quedo a su completa disposición para coordinar una reunión demostrativa de las capacidades del sistema.
+                
+                Atentamente,
+                
+                ___________________________
+                Maxwell Chacón
+                Ingeniero en Desarrollo de Software
+                https://ingemaxwellchacon.com
+                """.trimIndent()
+            )
+            showEditor(context, doc, scope) { refreshDocList() }
+        }
+
+        btnSyncAllDrive.setOnClickListener {
+            val docs = OfficeSuiteManager.loadAllDocuments(context)
+            if (docs.isEmpty()) {
+                Toast.makeText(context, "No hay documentos para sincronizar.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            Toast.makeText(context, "☁️ Sincronizando ${docs.size} documento(s) con Google Drive...", Toast.LENGTH_SHORT).show()
+            docs.forEach { doc ->
+                GoogleDriveConnector.syncDocument(context, doc) {}
+            }
+            refreshDocList()
+            Toast.makeText(context, "✅ Sincronización completada.", Toast.LENGTH_SHORT).show()
         }
 
         dialog.show()
     }
 
-    fun showEditor(context: Context, doc: OfficeDocument, scope: LifecycleCoroutineScope, autoTriggerAi: Boolean = false) {
+    fun showEditor(
+        context: Context,
+        doc: OfficeDocument,
+        scope: LifecycleCoroutineScope,
+        autoTriggerAi: Boolean = false,
+        onDismissCallback: (() -> Unit)? = null
+    ) {
         val dialog = Dialog(context, android.R.style.Theme_Black_NoTitleBar_Fullscreen)
         val view = LayoutInflater.from(context).inflate(R.layout.dialog_office_editor, null)
         dialog.setContentView(view)
+        dialog.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
 
+        val btnBackToBrowsing = view.findViewById<Button>(R.id.btnBackToBrowsingFromEditor)
         val etTitle = view.findViewById<EditText>(R.id.etEditorDocTitle)
         val tvSubtitle = view.findViewById<TextView>(R.id.tvDocTypeSubtitle)
         val ivType = view.findViewById<ImageView>(R.id.ivEditorDocType)
@@ -231,26 +407,35 @@ object OfficeViewerDialog {
             }
         }
 
-        btnClose.setOnClickListener {
-            // Auto save on exit
-            doc.title = etTitle.text.toString().trim()
+        fun saveCurrent() {
+            doc.title = etTitle.text.toString().trim().ifEmpty { "Sin_Titulo" }
             OfficeSuiteManager.saveDocumentContent(doc, etContent.text.toString())
+        }
+
+        btnBackToBrowsing.setOnClickListener {
+            saveCurrent()
             dialog.dismiss()
+            onDismissCallback?.invoke()
+        }
+
+        btnClose.setOnClickListener {
+            saveCurrent()
+            dialog.dismiss()
+            onDismissCallback?.invoke()
         }
 
         btnSave.setOnClickListener {
-            doc.title = etTitle.text.toString().trim()
-            OfficeSuiteManager.saveDocumentContent(doc, etContent.text.toString())
+            saveCurrent()
             Toast.makeText(context, "💾 Documento guardado correctamente.", Toast.LENGTH_SHORT).show()
         }
 
         btnPreview.setOnClickListener {
+            saveCurrent()
             Toast.makeText(context, "📄 Exportando vista previa a PDF / Imprimir...", Toast.LENGTH_LONG).show()
         }
 
         btnDrive.setOnClickListener {
-            doc.title = etTitle.text.toString().trim()
-            OfficeSuiteManager.saveDocumentContent(doc, etContent.text.toString())
+            saveCurrent()
             Toast.makeText(context, "☁️ Sincronizando con Google Drive...", Toast.LENGTH_SHORT).show()
             GoogleDriveConnector.syncDocument(context, doc) {
                 tvCloudStatus.text = "Sincronizado en Drive 🟢"

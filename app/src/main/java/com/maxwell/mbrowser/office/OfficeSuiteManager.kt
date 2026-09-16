@@ -99,4 +99,22 @@ object OfficeSuiteManager {
             e.printStackTrace()
         }
     }
+
+    fun deleteDocument(context: Context, docId: String): Boolean {
+        return try {
+            val doc = documentsList.find { it.id == docId }
+            if (doc != null) {
+                val file = File(doc.localPath)
+                if (file.exists()) file.delete()
+                documentsList.remove(doc)
+                true
+            } else {
+                val dir = getDocumentsDir(context)
+                val matching = dir.listFiles()?.firstOrNull { it.nameWithoutExtension == docId || it.name == docId }
+                matching?.delete() ?: false
+            }
+        } catch (e: Exception) {
+            false
+        }
+    }
 }

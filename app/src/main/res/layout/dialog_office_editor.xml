@@ -12,15 +12,27 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:paddingHorizontal="16dp"
-        android:paddingVertical="12dp"
+        android:paddingHorizontal="12dp"
+        android:paddingVertical="10dp"
         android:background="@drawable/bg_glass_bar"
         android:elevation="6dp">
 
+        <Button
+            android:id="@+id/btnBackToBrowsingFromEditor"
+            android:layout_width="wrap_content"
+            android:layout_height="38dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/bg_aqua_button"
+            android:text="← Regresar"
+            android:textColor="@color/text_primary"
+            android:textStyle="bold"
+            android:textSize="11sp"
+            android:paddingHorizontal="10dp" />
+
         <ImageView
             android:id="@+id/ivEditorDocType"
-            android:layout_width="26dp"
-            android:layout_height="26dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:src="@drawable/ic_description"
             android:tint="@color/aqua_cyan" />
 
@@ -28,7 +40,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="8dp"
             android:orientation="vertical">
 
             <EditText
@@ -38,7 +50,7 @@
                 android:background="@null"
                 android:text="Mi_Documento.docx"
                 android:textColor="@color/text_primary"
-                android:textSize="16sp"
+                android:textSize="15sp"
                 android:textStyle="bold"
                 android:singleLine="true"
                 android:inputType="text" />
