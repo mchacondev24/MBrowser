@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/aero_bg_dark"
+    tools:context=".MainActivity">
+
+    <!-- Top Glass Toolbar Container -->
+    <LinearLayout
+        android:id="@+id/topToolbarContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:orientation="vertical"
+        android:padding="8dp"
+        android:background="@drawable/bg_glass_bar"
+        android:elevation="8dp">
+
+        <!-- Top Modes Status Row -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="6dp">
+
+            <!-- IngeHub launcher -->
+            <LinearLayout
+                android:id="@+id/btnIngeHub"
+                android:layout_width="wrap_content"
+                android:layout_height="28dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="8dp"
+                android:background="@drawable/bg_aqua_pill"
+                android:clickable="true"
+                android:focusable="true">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:src="@drawable/ic_hub"
+                    android:tint="@color/aqua_cyan" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:text="IngeHub"
+                    android:textColor="@color/aqua_cyan"
+                    android:textSize="11sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1" />
+
+            <!-- Super Veloz Toggle -->
+            <LinearLayout
+                android:id="@+id/btnSuperVelozToggle"
+                android:layout_width="wrap_content"
+                android:layout_height="28dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="8dp"
+                android:layout_marginEnd="6dp"
+                android:background="@drawable/bg_turbo_badge"
+                android:clickable="true"
+                android:focusable="true">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:src="@drawable/ic_bolt"
+                    android:tint="@color/turbo_yellow" />
+
+                <TextView
+                    android:id="@+id/tvSuperVelozLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:text="Turbo: ON"
+                    android:textColor="@color/text_primary"
+                    android:textSize="11sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <!-- GameBoost Toggle -->
+            <LinearLayout
+                android:id="@+id/btnGameBoostToggle"
+                android:layout_width="wrap_content"
+                android:layout_height="28dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="8dp"
+                android:layout_marginEnd="6dp"
+                android:background="@drawable/bg_game_badge"
+                android:clickable="true"
+                android:focusable="true">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:src="@drawable/ic_gamepad"
+                    android:tint="@color/game_emerald" />
+
+                <TextView
+                    android:id="@+id/tvGameBoostLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:text="Gaming"
+                    android:textColor="@color/text_primary"
+                    android:textSize="11sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <!-- DevTools Toggle -->
+            <LinearLayout
+                android:id="@+id/btnDevToolsToggle"
+                android:layout_width="wrap_content"
+                android:layout_height="28dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="8dp"
+                android:background="@drawable/bg_dev_badge"
+                android:clickable="true"
+                android:focusable="true">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:src="@drawable/ic_bug"
+                    android:tint="@color/dev_purple" />
+
+                <TextView
+                    android:id="@+id/tvDevBadgeErrors"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:text="Dev"
+                    android:textColor="@color/text_primary"
+                    android:textSize="11sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- URL Search Row -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="10dp"
+            android:background="@drawable/bg_aqua_pill">
+
+            <ImageView
+                android:id="@+id/ivSecurityStatus"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:src="@drawable/ic_shield"
+                android:tint="@color/aqua_cyan" />
+
+            <EditText
+                android:id="@+id/etUrlInput"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="6dp"
+                android:background="@null"
+                android:hint="@string/url_hint"
+                android:textColorHint="@color/text_muted"
+                android:textColor="@color/text_primary"
+                android:textSize="14sp"
+                android:inputType="textUri"
+                android:imeOptions="actionGo"
+                android:singleLine="true" />
+
+            <!-- Quick Purge Cache Button right inside address bar -->
+            <ImageButton
+                android:id="@+id/btnQuickClearCache"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:background="@drawable/bg_icon_button"
+                android:src="@drawable/ic_delete_sweep"
+                android:tint="@color/dev_error_red"
+                android:contentDescription="@string/devtools_clear_cache"
+                android:padding="6dp" />
+
+            <ImageButton
+                android:id="@+id/btnGoOrReload"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginStart="4dp"
+                android:background="@drawable/bg_icon_button"
+                android:src="@drawable/ic_refresh"
+                android:tint="@color/aqua_cyan"
+                android:contentDescription="@string/btn_reload"
+                android:padding="6dp" />
+        </LinearLayout>
+
+        <!-- Loading Progress Bar -->
+        <ProgressBar
+            android:id="@+id/progressBarLoading"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_marginTop="4dp"
+            android:indeterminateOnly="false"
+            android:max="100"
+            android:progress="0"
+            android:progressTint="@color/aqua_cyan"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <!-- Web Content Area -->
+    <FrameLayout
+        android:id="@+id/webContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/topToolbarContainer"
+        android:layout_above="@+id/bottomToolbarContainer">
+
+        <WebView
+            android:id="@+id/mainWebView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </FrameLayout>
+
+    <!-- Floating DevTools Error Notification Bar -->
+    <LinearLayout
+        android:id="@+id/floatingDevBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/bottomToolbarContainer"
+        android:layout_marginHorizontal="12dp"
+        android:layout_marginBottom="8dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="8dp"
+        android:background="@drawable/bg_glass_card"
+        android:visibility="gone"
+        android:elevation="12dp">
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_bug"
+            android:tint="@color/dev_error_red" />
+
+        <TextView
+            android:id="@+id/tvFloatingErrorText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="8dp"
+            android:text="2 errores JS detectados"
+            android:textColor="@color/text_primary"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/btnFloatingCopyErrors"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:background="@drawable/bg_aqua_button"
+            android:text="@string/devtools_copy_errors"
+            android:textColor="@color/text_primary"
+            android:textSize="11sp"
+            android:paddingHorizontal="10dp" />
+    </LinearLayout>
+
+    <!-- Floating Fullscreen Exit Trigger for GameBoost mode -->
+    <ImageButton
+        android:id="@+id/btnExitFullscreen"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="12dp"
+        android:background="@drawable/bg_game_badge"
+        android:src="@drawable/ic_fullscreen"
+        android:tint="@color/text_primary"
+        android:contentDescription="Salir de Pantalla Completa"
+        android:visibility="gone"
+        android:elevation="20dp" />
+
+    <!-- Bottom Floating Glass Navigation Bar -->
+    <LinearLayout
+        android:id="@+id/bottomToolbarContainer"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="16dp"
+        android:background="@drawable/bg_glass_bar"
+        android:elevation="8dp">
+
+        <!-- Back Button -->
+        <ImageButton
+            android:id="@+id/btnNavBack"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_icon_button"
+            android:src="@drawable/ic_arrow_back"
+            android:tint="@color/text_primary"
+            android:contentDescription="@string/btn_back" />
+
+        <!-- Forward Button -->
+        <ImageButton
+            android:id="@+id/btnNavForward"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_icon_button"
+            android:src="@drawable/ic_arrow_forward"
+            android:tint="@color/text_primary"
+            android:contentDescription="@string/btn_forward" />
+
+        <!-- Home Button (Loads Maxwell Chacon portfolio) -->
+        <ImageButton
+            android:id="@+id/btnNavHome"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_icon_button"
+            android:src="@drawable/ic_home"
+            android:tint="@color/aqua_cyan"
+            android:contentDescription="@string/btn_home" />
+
+        <!-- Hard Reload / Bypass Cache Button -->
+        <ImageButton
+            android:id="@+id/btnHardReload"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_icon_button"
+            android:src="@drawable/ic_refresh"
+            android:tint="@color/turbo_yellow"
+            android:contentDescription="@string/btn_hard_reload" />
+
+        <!-- Menu / About Button -->
+        <ImageButton
+            android:id="@+id/btnNavMenu"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_icon_button"
+            android:src="@drawable/ic_more_vert"
+            android:tint="@color/text_primary"
+            android:contentDescription="@string/btn_menu" />
+    </LinearLayout>
+
+</RelativeLayout>

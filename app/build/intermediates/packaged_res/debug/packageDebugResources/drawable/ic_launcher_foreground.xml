@@ -1,0 +1,13 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+  <path
+      android:fillColor="#00E5FF"
+      android:pathData="M30,30 L45,30 L54,52 L63,30 L78,30 L78,78 L66,78 L66,48 L58,66 L50,66 L42,48 L42,78 L30,78 Z"/>
+  <!-- Turbo Bolt Accent -->
+  <path
+      android:fillColor="#FF9100"
+      android:pathData="M68,60 L78,44 L70,44 L74,32 L62,50 L68,50 Z"/>
+</vector>

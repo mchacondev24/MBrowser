@@ -1,0 +1,40 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme with Windows Vista Aero / Mac Aqua styling -->
+    <style name="Theme.MBrowser.AeroAqua" parent="Theme.Material3.Dark.NoActionBar">
+        <!-- Primary brand colors -->
+        <item name="colorPrimary">@color/aqua_cyan</item>
+        <item name="colorPrimaryVariant">@color/aqua_blue</item>
+        <item name="colorOnPrimary">@color/aero_bg_dark</item>
+        
+        <!-- Secondary brand colors -->
+        <item name="colorSecondary">@color/aqua_blue</item>
+        <item name="colorSecondaryVariant">@color/aqua_deep_blue</item>
+        <item name="colorOnSecondary">@color/text_primary</item>
+        
+        <!-- Background and Surface -->
+        <item name="android:colorBackground">@color/aero_bg_dark</item>
+        <item name="colorSurface">@color/aero_glass_surface</item>
+        <item name="colorOnSurface">@color/text_primary</item>
+
+        <!-- Status bar and Navigation bar -->
+        <item name="android:statusBarColor">@color/aero_bg_dark</item>
+        <item name="android:navigationBarColor">@color/aero_bg_dark</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">false</item>
+    </style>
+
+    <!-- Glass Dialog Style -->
+    <style name="Theme.MBrowser.Dialog" parent="ThemeOverlay.Material3.Dialog">
+        <item name="android:windowBackground">@drawable/bg_glass_card</item>
+        <item name="colorSurface">@color/aero_glass_surface</item>
+    </style>
+
+    <!-- Bottom Sheet Dialog Style -->
+    <style name="Theme.MBrowser.BottomSheet" parent="ThemeOverlay.Material3.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/Widget.MBrowser.BottomSheet</item>
+    </style>
+
+    <style name="Widget.MBrowser.BottomSheet" parent="Widget.Material3.BottomSheet">
+        <item name="android:background">@drawable/bg_bottom_sheet_glass</item>
+    </style>
+</resources>

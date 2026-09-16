@@ -1,0 +1,45 @@
+<resources>
+    <string name="app_name">MBrowser</string>
+    <string name="app_tagline">Super Hiper Veloz &amp; GameBoost Engine</string>
+    <string name="default_home_url">https://ingemaxwellchacon.com</string>
+    
+    <!-- Navigation & Toolbar -->
+    <string name="url_hint">Buscar o ingresar URL...</string>
+    <string name="btn_home">Inicio</string>
+    <string name="btn_back">Atrás</string>
+    <string name="btn_forward">Adelante</string>
+    <string name="btn_reload">Recargar</string>
+    <string name="btn_hard_reload">Hard Reload (Bypass Cache)</string>
+    <string name="btn_tabs">Pestañas</string>
+    <string name="btn_menu">Menú</string>
+
+    <!-- Super Veloz Mode -->
+    <string name="mode_super_veloz">Modo Super Hiper Veloz</string>
+    <string name="mode_super_veloz_desc">Bloqueo nativo ultra agresivo de rastreadores, scripts de publicidad y compresión de recursos.</string>
+    <string name="blocked_count">%1$d elementos bloqueados</string>
+
+    <!-- GameBoost Mode -->
+    <string name="mode_gameboost">Modo Gaming &amp; Cloud Play</string>
+    <string name="mode_gameboost_desc">Priorización de paquetes QoS (WebSockets/Streaming), aceleración forzada GPU/WebGL y pantalla completa inmersiva.</string>
+
+    <!-- DevTools Mode -->
+    <string name="mode_devtools">Modo Desarrollador &amp; Consola</string>
+    <string name="devtools_clear_cache">Limpiar Caché y Recargar</string>
+    <string name="devtools_cache_cleared">¡Caché de memoria y disco purgada con éxito!</string>
+    <string name="devtools_copy_errors">Copiar Errores JS</string>
+    <string name="devtools_errors_copied">Errores copiados al portapapeles</string>
+    <string name="devtools_no_errors">Sin errores detectados en la página actual.</string>
+    <string name="devtools_inspect_title">Inspector de Consola y Errores</string>
+
+    <!-- IngeHub -->
+    <string name="ingehub_title">IngeHub</string>
+    <string name="ingehub_subtitle">Portafolio, Herramientas &amp; Gaming Hub</string>
+    <string name="ingehub_portfolio">Portafolio Oficial</string>
+    <string name="ingehub_portfolio_url">https://ingemaxwellchacon.com</string>
+    <string name="ingehub_cloud_gaming">Cloud Gaming &amp; Emuladores</string>
+
+    <!-- About & Licenses -->
+    <string name="about_title">Acerca de MBrowser</string>
+    <string name="about_version">MBrowser v1.0.0 (Aero Aqua Edition)</string>
+    <string name="about_license_summary">MBrowser está desarrollado bajo los lineamientos y componentes de código abierto con compatibilidad MPL 2.0 (Mozilla Public License 2.0) y tecnologías optimizadas de navegación móvil (Waterfox / GeckoView Engine architecture).</string>
+</resources>

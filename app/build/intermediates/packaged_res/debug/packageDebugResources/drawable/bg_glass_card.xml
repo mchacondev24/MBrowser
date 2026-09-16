@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <corners android:radius="24dp" />
+            <stroke
+                android:width="1.5dp"
+                android:color="@color/aero_glass_border" />
+            <gradient
+                android:angle="135"
+                android:startColor="#E6102338"
+                android:centerColor="#D90B1726"
+                android:endColor="#F208101C" />
+        </shape>
+    </item>
+    <!-- Top glass glossy glare -->
+    <item
+        android:bottom="30dp">
+        <shape android:shape="rectangle">
+            <corners
+                android:topLeftRadius="24dp"
+                android:topRightRadius="24dp" />
+            <gradient
+                android:angle="270"
+                android:startColor="#25FFFFFF"
+                android:endColor="#00FFFFFF" />
+        </shape>
+    </item>
+</layer-list>

@@ -1,0 +1,150 @@
+[
+    {
+        "merged": "com.maxwell.mbrowser.app-debug-35:/drawable_ic_home.xml.flat",
+        "source": "com.maxwell.mbrowser.app-main-37:/drawable/ic_home.xml"
+    },
+    {
+        "merged": "com.maxwell.mbrowser.app-debug-35:/layout_activity_main.xml.flat",
+        "source": "com.maxwell.mbrowser.app-main-37:/layout/activity_main.xml"
+    },
+    {
+        "merged": "com.maxwell.mbrowser.app-debug-35:/drawable_bg_dev_badge.xml.flat",
+        "source": "com.maxwell.mbrowser.app-main-37:/drawable/bg_dev_badge.xml"
+    },
+    {
+        "merged": "com.maxwell.mbrowser.app-debug-35:/layout_dialog_devtools.xml.flat",
+        "source": "com.maxwell.mbrowser.app-main-37:/layout/dialog_devtools.xml"
+    },
+    {
+        "merged": "com.maxwell.mbrowser.app-debug-35:/drawable_bg_glass_card.xml.flat",
+        "source": "com.maxwell.mbrowser.app-main-37:/drawable/bg_glass_card.xml"
+    },
+    {
+        "merged": "com.maxwell.mbrowser.app-debug-35:/xml_data_extraction_rules.xml.flat",
+        "source": "com.maxwell.mbrowser.app-main-37:/xml/data_extraction_rules.xml"
+    },
+    {
+        "merged": "com.maxwell.mbrowser.app-debug-35:/drawable_ic_shield.xml.flat",
+        "source": "com.maxwell.mbrowser.app-main-37:/drawable/ic_shield.xml"
+    },
+    {
+        "merged": "com.maxwell.mbrowser.app-debug-35:/layout_item_console_log.xml.flat",
+        "source": "com.maxwell.mbrowser.app-main-37:/layout/item_console_log.xml"
+    },
+    {
+        "merged": "com.maxwell.mbrowser.app-debug-35:/drawable_ic_search.xml.flat",
+        "source": "com.maxwell.mbrowser.app-main-37:/drawable/ic_search.xml"
+    },
+    {
+        "merged": "com.maxwell.mbrowser.app-debug-35:/drawable_ic_gamepad.xml.flat",
+        "source": "com.maxwell.mbrowser.app-main-37:/drawable/ic_gamepad.xml"
+    },
+    {
+        "merged": "com.maxwell.mbrowser.app-debug-35:/layout_dialog_about.xml.flat",
+        "source": "com.maxwell.mbrowser.app-main-37:/layout/dialog_about.xml"
+    },
+    {
+        "merged": "com.maxwell.mbrowser.app-debug-35:/drawable_ic_arrow_forward.xml.flat",
+        "source": "com.maxwell.mbrowser.app-main-37:/drawable/ic_arrow_forward.xml"
+    },
+    {
+        "merged": "com.maxwell.mbrowser.app-debug-35:/drawable_ic_more_vert.xml.flat",
+        "source": "com.maxwell.mbrowser.app-main-37:/drawable/ic_more_vert.xml"
+    },
+    {
+        "merged": "com.maxwell.mbrowser.app-debug-35:/drawable_ic_tab.xml.flat",
+        "source": "com.maxwell.mbrowser.app-main-37:/drawable/ic_tab.xml"
+    },
+    {
+        "merged": "com.maxwell.mbrowser.app-debug-35:/drawable_ic_bolt.xml.flat",
+        "source": "com.maxwell.mbrowser.app-main-37:/drawable/ic_bolt.xml"
+    },
+    {
+        "merged": "com.maxwell.mbrowser.app-debug-35:/mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "com.maxwell.mbrowser.app-main-37:/mipmap-anydpi-v26/ic_launcher.xml"
+    },
+    {
+        "merged": "com.maxwell.mbrowser.app-debug-35:/layout_sheet_ingehub.xml.flat",
+        "source": "com.maxwell.mbrowser.app-main-37:/layout/sheet_ingehub.xml"
+    },
+    {
+        "merged": "com.maxwell.mbrowser.app-debug-35:/drawable_ic_close.xml.flat",
+        "source": "com.maxwell.mbrowser.app-main-37:/drawable/ic_close.xml"
+    },
+    {
+        "merged": "com.maxwell.mbrowser.app-debug-35:/drawable_bg_aqua_button.xml.flat",
+        "source": "com.maxwell.mbrowser.app-main-37:/drawable/bg_aqua_button.xml"
+    },
+    {
+        "merged": "com.maxwell.mbrowser.app-debug-35:/drawable_bg_aqua_pill.xml.flat",
+        "source": "com.maxwell.mbrowser.app-main-37:/drawable/bg_aqua_pill.xml"
+    },
+    {
+        "merged": "com.maxwell.mbrowser.app-debug-35:/drawable_bg_turbo_badge.xml.flat",
+        "source": "com.maxwell.mbrowser.app-main-37:/drawable/bg_turbo_badge.xml"
+    },
+    {
+        "merged": "com.maxwell.mbrowser.app-debug-35:/drawable_ic_arrow_back.xml.flat",
+        "source": "com.maxwell.mbrowser.app-main-37:/drawable/ic_arrow_back.xml"
+    },
+    {
+        "merged": "com.maxwell.mbrowser.app-debug-35:/drawable_ic_refresh.xml.flat",
+        "source": "com.maxwell.mbrowser.app-main-37:/drawable/ic_refresh.xml"
+    },
+    {
+        "merged": "com.maxwell.mbrowser.app-debug-35:/drawable_ic_fullscreen.xml.flat",
+        "source": "com.maxwell.mbrowser.app-main-37:/drawable/ic_fullscreen.xml"
+    },
+    {
+        "merged": "com.maxwell.mbrowser.app-debug-35:/mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "com.maxwell.mbrowser.app-main-37:/mipmap-anydpi-v26/ic_launcher_round.xml"
+    },
+    {
+        "merged": "com.maxwell.mbrowser.app-debug-35:/drawable_bg_icon_button.xml.flat",
+        "source": "com.maxwell.mbrowser.app-main-37:/drawable/bg_icon_button.xml"
+    },
+    {
+        "merged": "com.maxwell.mbrowser.app-debug-35:/drawable_ic_code.xml.flat",
+        "source": "com.maxwell.mbrowser.app-main-37:/drawable/ic_code.xml"
+    },
+    {
+        "merged": "com.maxwell.mbrowser.app-debug-35:/drawable_bg_glass_bar.xml.flat",
+        "source": "com.maxwell.mbrowser.app-main-37:/drawable/bg_glass_bar.xml"
+    },
+    {
+        "merged": "com.maxwell.mbrowser.app-debug-35:/drawable_ic_delete_sweep.xml.flat",
+        "source": "com.maxwell.mbrowser.app-main-37:/drawable/ic_delete_sweep.xml"
+    },
+    {
+        "merged": "com.maxwell.mbrowser.app-debug-35:/drawable_ic_bug.xml.flat",
+        "source": "com.maxwell.mbrowser.app-main-37:/drawable/ic_bug.xml"
+    },
+    {
+        "merged": "com.maxwell.mbrowser.app-debug-35:/drawable_bg_game_badge.xml.flat",
+        "source": "com.maxwell.mbrowser.app-main-37:/drawable/bg_game_badge.xml"
+    },
+    {
+        "merged": "com.maxwell.mbrowser.app-debug-35:/drawable_bg_bottom_sheet_glass.xml.flat",
+        "source": "com.maxwell.mbrowser.app-main-37:/drawable/bg_bottom_sheet_glass.xml"
+    },
+    {
+        "merged": "com.maxwell.mbrowser.app-debug-35:/drawable_ic_hub.xml.flat",
+        "source": "com.maxwell.mbrowser.app-main-37:/drawable/ic_hub.xml"
+    },
+    {
+        "merged": "com.maxwell.mbrowser.app-debug-35:/xml_backup_rules.xml.flat",
+        "source": "com.maxwell.mbrowser.app-main-37:/xml/backup_rules.xml"
+    },
+    {
+        "merged": "com.maxwell.mbrowser.app-debug-35:/drawable_bg_clear_cache_button.xml.flat",
+        "source": "com.maxwell.mbrowser.app-main-37:/drawable/bg_clear_cache_button.xml"
+    },
+    {
+        "merged": "com.maxwell.mbrowser.app-debug-35:/drawable_ic_content_copy.xml.flat",
+        "source": "com.maxwell.mbrowser.app-main-37:/drawable/ic_content_copy.xml"
+    },
+    {
+        "merged": "com.maxwell.mbrowser.app-debug-35:/drawable_ic_launcher_foreground.xml.flat",
+        "source": "com.maxwell.mbrowser.app-main-37:/drawable/ic_launcher_foreground.xml"
+    }
+]
