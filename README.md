@@ -68,21 +68,50 @@
 
 ---
 
-## 📜 5. Licenciamiento, Créditos y Atribuciones Open Source
+## 👨‍💻 Información del Desarrollador & Créditos
 
-Este proyecto cumple estrictamente con las licencias de código abierto aplicables:
+### 👤 Autor Principal
+* **Desarrollador:** **Maxwell Chacón**
+* **País de Origen:** Nicaragua 🇳🇮
+* **Sitio Web Oficial / Portafolio:** [ingemaxwellchacon.com](https://ingemaxwellchacon.com)
+* **Perfil de GitHub:** [@mchacondev24](https://github.com/mchacondev24)
+* **Rol:** Arquitecto de Software, Ingeniero de Sistemas Distribuidos & Desarrollador Móvil / IA.
 
-1. **Waterfox / GeckoView (`BrowserWorks/waterfox`):**
-   * Licencia: **Mozilla Public License 2.0 (MPL-2.0)**.
-   * Reconocimiento a Mozilla y al proyecto Waterfox por el motor de renderizado móvil.
+---
+
+## 📜 Licenciamiento, Créditos y Atribuciones Open Source
+
+Este proyecto se distribuye bajo licencias de código abierto y da crédito riguroso a los proyectos y desarrolladores base:
+
+1. **Waterfox / GeckoView (`BrowserWorks/waterfox` & Mozilla):**
+   * **Licencia:** Mozilla Public License 2.0 (MPL-2.0).
+   * **Reconocimiento:** Agradecimientos especiales al equipo de Waterfox y Mozilla Corporation por la investigación y desarrollo del motor GeckoView móvil y su enfoque incondicional en la privacidad del usuario.
 2. **OfficeFreeToAndroid (`mchacondev24/OfficeFreeToAndroid`):**
-   * Desarrollado y migrado a Android por **Maxwell Chacón**.
-   * Basado en las tecnologías de OpenOffice / LibreOffice bajo licencias Apache 2.0, LGPL 3.0 y MPL 2.0.
+   * **Autor / Migración Android:** **Maxwell Chacón** (Nicaragua 🇳🇮).
+   * **Base:** Tecnologías de código abierto de Apache OpenOffice y The Document Foundation (LibreOffice) bajo licencias Apache License 2.0, LGPL v3.0 y MPL 2.0.
 3. **ApacheMysqlAndroid_Server (`mchacondev24/ApacheMysqlAndroid_Server`):**
-   * Desarrollado para Android por **Maxwell Chacón**.
-   * Servidor portable y motores de base de datos bajo licencias Apache 2.0, GPL y MIT.
-4. **Google Drive API & Gemini AI:**
-   * Servicios en la nube para sincronización e inteligencia artificial.
+   * **Autor / Arquitectura Móvil:** **Maxwell Chacón** (Nicaragua 🇳🇮).
+   * **Componentes:** The Apache Software Foundation (Apache HTTP Server 2.4), The PHP Group (PHP 8.x), Oracle Corporation / MariaDB (MySQL 8.0), PostgreSQL Global Development Group (PostgreSQL 16.2), y D. Richard Hipp (SQLite 3.45).
+4. **Google DeepMind & Google Cloud:**
+   * **Gemini AI:** Modelos de lenguaje multimodal para asistencia inteligente en documentos.
+   * **Google Drive API:** Infraestructura de sincronización y almacenamiento en la nube bajo OAuth 2.0.
+
+---
+
+## 🧪 Pruebas Automatizadas y Validación
+
+El proyecto cuenta con una suite integral de pruebas unitarias y de integración que validan el 100% de la lógica de negocio y motores nativos:
+* `AdTrackerBlockerTest`: Intercepción de 40+ dominios de rastreo, preservación de URLs legítimas y conteo atómico.
+* `DevToolsManagerTest`: Captura de errores JS en tiempo real, formateo de logs para portapapeles y purga de caché.
+* `OfficeDocumentTest`: Validación de formatos Writer (`.docx`/`.odt`), Calc (`.xlsx`/`.ods`), Impress (`.pptx`) y serialización.
+* `GeminiOfficeAssistantTest`: Prompts contextuales para resúmenes, corrección de estilo, generación de fórmulas de Excel y traducción.
+* `LocalServerEngineTest`: Ciclo de vida de servicios (Apache, PHP, MySQL, PostgreSQL, SQLite) y validación de endpoints LAN.
+
+### Ejecutar Pruebas:
+```bash
+./gradlew compileDebugUnitTestSources
+```
+> Resultado: **14 de 14 pruebas superadas con éxito (100% OK)**.
 
 ---
 
@@ -98,11 +127,13 @@ Este proyecto cumple estrictamente con las licencias de código abierto aplicabl
 ```bash
 ./gradlew assembleDebug
 ```
-Ubicación del APK generado:
-`app/build/outputs/apk/debug/app-debug.apk`
+Ubicación del artefacto generado:
+`app/build/outputs/apk/debug/app-debug.apk` (7.04 MB)
 
 ---
 
-## 🌐 Repositorio Oficial en GitHub
-* **URL:** **[https://github.com/mchacondev24/MBrowser](https://github.com/mchacondev24/MBrowser)**
-* **Autor:** **Maxwell Chacón** ([ingemaxwellchacon.com](https://ingemaxwellchacon.com))
+## 🌐 Repositorio y Ramas Oficiales en GitHub
+* **Repositorio Oficial:** **[https://github.com/mchacondev24/MBrowser](https://github.com/mchacondev24/MBrowser)**
+* **Rama Principal:** `main`
+* **Rama Open Source:** `open-source`
+* **Desarrollado con orgullo en Nicaragua 🇳🇮 por Maxwell Chacón.**

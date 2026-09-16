@@ -73,8 +73,7 @@ object AdTrackerBlocker {
         if (!isEnabled || url.isNullOrEmpty()) return false
         
         try {
-            val uri = Uri.parse(url)
-            val host = uri.host?.lowercase() ?: return false
+            val host = extractHost(url) ?: return false
 
             // Check host matching
             for (blocked in BLOCKED_DOMAINS) {
@@ -85,7 +84,7 @@ object AdTrackerBlocker {
             }
 
             // Check path matching
-            val path = uri.path?.lowercase() ?: ""
+            val path = extractPath(url)
             for (ext in BLOCKED_EXTENSIONS) {
                 if (path.endsWith(ext) || path.contains(ext)) {
                     blockedTrackerCount.incrementAndGet()
@@ -97,6 +96,28 @@ object AdTrackerBlocker {
         }
 
         return false
+    }
+
+    private fun extractHost(url: String): String? {
+        val cleanUrl = if (!url.contains("://")) "http://$url" else url
+        return try {
+            val startIndex = cleanUrl.indexOf("://") + 3
+            val endIndex = cleanUrl.indexOf('/', startIndex).let { if (it == -1) cleanUrl.indexOf('?', startIndex) else it }
+            val hostPort = if (endIndex == -1) cleanUrl.substring(startIndex) else cleanUrl.substring(startIndex, endIndex)
+            hostPort.substringBefore(':').lowercase().trim()
+        } catch (_: Exception) {
+            null
+        }
+    }
+
+    private fun extractPath(url: String): String {
+        return try {
+            val startIndex = url.indexOf("://")
+            val pathStart = if (startIndex != -1) url.indexOf('/', startIndex + 3) else url.indexOf('/')
+            if (pathStart == -1) "" else url.substring(pathStart).substringBefore('?').lowercase()
+        } catch (_: Exception) {
+            ""
+        }
     }
 
     /**
