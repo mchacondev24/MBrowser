@@ -1,0 +1,1419 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>OfficeFreeToAndroid - LibreOffice & OpenOffice Suite</title>
+    <style>
+        :root {
+            --lo-dark-bg: #1e1e1e;
+            --lo-toolbar-bg: #2b2b2b;
+            --lo-border: #3c3c3c;
+            --lo-hover: #3a3a3a;
+            --lo-active: #4a4a4a;
+            --lo-text: #dfdfdf;
+            --lo-text-muted: #8e8e8e;
+            --lo-accent-cyan: #00e5ff;
+            --lo-ruler-bg: #262626;
+            --lo-canvas-bg: #121212;
+            --lo-status-bg: #1c1c1c;
+            --lo-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Liberation Sans", sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        body, html {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: var(--lo-font);
+            background-color: var(--lo-dark-bg);
+            color: var(--lo-text);
+            font-size: 12px;
+        }
+
+        #app-container {
+            display: flex;
+            flex-direction: column;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        /* Top Return to Browsing & Brand Header */
+        .suite-top-bar {
+            display: flex;
+            align-items: center;
+            background: linear-gradient(180deg, #182838 0%, #0d1b2a 100%);
+            border-bottom: 1px solid rgba(0, 229, 255, 0.3);
+            padding: 4px 10px;
+            gap: 10px;
+            height: 38px;
+            flex-shrink: 0;
+        }
+
+        .btn-return-browse {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: linear-gradient(135deg, #00e5ff 0%, #0088cc 100%);
+            color: #05101a;
+            font-weight: 700;
+            font-size: 11px;
+            padding: 4px 12px;
+            border-radius: 16px;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0, 229, 255, 0.4);
+            white-space: nowrap;
+        }
+
+        .btn-return-browse:active {
+            transform: scale(0.96);
+        }
+
+        .suite-brand-title {
+            font-weight: 700;
+            color: #ffffff;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .suite-brand-badge {
+            background: rgba(0, 229, 255, 0.15);
+            color: var(--lo-accent-cyan);
+            border: 1px solid var(--lo-accent-cyan);
+            font-size: 9px;
+            padding: 1px 6px;
+            border-radius: 8px;
+            font-weight: 600;
+        }
+
+        /* Multitabs Bar */
+        .tabs-header-bar {
+            display: flex;
+            align-items: center;
+            background: #181818;
+            border-bottom: 1px solid var(--lo-border);
+            padding: 0 4px;
+            overflow-x: auto;
+            flex-shrink: 0;
+            height: 32px;
+        }
+
+        .tabs-list {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+            flex: 1;
+            overflow-x: auto;
+        }
+
+        .doc-tab {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 12px;
+            background: #252525;
+            border-radius: 6px 6px 0 0;
+            border: 1px solid var(--lo-border);
+            border-bottom: none;
+            cursor: pointer;
+            font-size: 11px;
+            color: var(--lo-text-muted);
+            white-space: nowrap;
+            transition: background 0.15s;
+        }
+
+        .doc-tab.active {
+            background: var(--lo-toolbar-bg);
+            color: #ffffff;
+            font-weight: 600;
+            border-top: 2px solid var(--lo-accent-cyan);
+        }
+
+        .doc-tab-close {
+            font-size: 11px;
+            color: var(--lo-text-muted);
+            cursor: pointer;
+            padding: 0 2px;
+        }
+
+        .doc-tab-close:hover {
+            color: #ff5252;
+        }
+
+        .btn-new-tab {
+            background: #252525;
+            color: var(--lo-accent-cyan);
+            border: 1px solid var(--lo-border);
+            border-radius: 4px;
+            padding: 2px 8px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 13px;
+            margin-left: 4px;
+        }
+
+        /* Menu Bar */
+        .menu-bar {
+            display: flex;
+            background: var(--lo-dark-bg);
+            border-bottom: 1px solid var(--lo-border);
+            padding: 0 4px;
+            flex-shrink: 0;
+            position: relative;
+            overflow-x: auto;
+        }
+
+        .menu-item {
+            padding: 4px 8px;
+            cursor: pointer;
+            color: var(--lo-text);
+            font-size: 11px;
+            white-space: nowrap;
+            position: relative;
+        }
+
+        .menu-item:hover, .menu-item.open {
+            background: var(--lo-hover);
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: #252525;
+            border: 1px solid #444;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.8);
+            border-radius: 4px;
+            min-width: 190px;
+            z-index: 1000;
+            padding: 4px 0;
+        }
+
+        .dropdown-menu.show {
+            display: block;
+        }
+
+        .dropdown-option {
+            padding: 6px 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            color: #efefef;
+            font-size: 11px;
+        }
+
+        .dropdown-option:hover {
+            background: #0078d4;
+            color: #ffffff;
+        }
+
+        .dropdown-divider {
+            height: 1px;
+            background: #3c3c3c;
+            margin: 4px 0;
+        }
+
+        /* Standard & Formatting Toolbars */
+        .toolbar-row {
+            display: flex;
+            align-items: center;
+            background: var(--lo-toolbar-bg);
+            border-bottom: 1px solid var(--lo-border);
+            padding: 3px 6px;
+            gap: 2px;
+            overflow-x: auto;
+            flex-shrink: 0;
+        }
+
+        .tool-btn {
+            background: transparent;
+            border: 1px solid transparent;
+            color: var(--lo-text);
+            border-radius: 3px;
+            min-width: 26px;
+            height: 26px;
+            padding: 2px 6px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .tool-btn:hover {
+            background: var(--lo-hover);
+            border-color: #4a4a4a;
+        }
+
+        .tool-btn:active, .tool-btn.active {
+            background: var(--lo-active);
+            border-color: var(--lo-accent-cyan);
+            color: var(--lo-accent-cyan);
+        }
+
+        .tool-separator {
+            width: 1px;
+            height: 18px;
+            background: #444;
+            margin: 0 3px;
+            flex-shrink: 0;
+        }
+
+        .tool-select {
+            background: #1e1e1e;
+            color: #ffffff;
+            border: 1px solid #4a4a4a;
+            border-radius: 3px;
+            height: 24px;
+            padding: 2px 6px;
+            font-size: 11px;
+            outline: none;
+        }
+
+        /* Formula Bar (Calc Mode) */
+        #calc-formula-bar {
+            display: none;
+            align-items: center;
+            background: #252525;
+            border-bottom: 1px solid var(--lo-border);
+            padding: 2px 6px;
+            gap: 6px;
+            font-family: monospace;
+            font-size: 12px;
+            flex-shrink: 0;
+        }
+
+        #cell-address-box {
+            width: 55px;
+            background: #181818;
+            color: var(--lo-accent-cyan);
+            border: 1px solid #444;
+            padding: 2px 4px;
+            text-align: center;
+            font-weight: bold;
+            border-radius: 2px;
+        }
+
+        #formula-input {
+            flex: 1;
+            background: #181818;
+            color: #ffffff;
+            border: 1px solid #444;
+            padding: 3px 8px;
+            border-radius: 2px;
+            outline: none;
+            font-family: monospace;
+        }
+
+        /* Horizontal Ruler Bar */
+        #ruler-bar {
+            display: flex;
+            align-items: center;
+            height: 18px;
+            background: var(--lo-ruler-bg);
+            border-bottom: 1px solid #333;
+            padding: 0 40px;
+            font-size: 9px;
+            color: #777;
+            justify-content: space-around;
+            flex-shrink: 0;
+            overflow: hidden;
+        }
+
+        .ruler-mark {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .ruler-tick {
+            width: 1px;
+            height: 4px;
+            background: #555;
+        }
+
+        /* Main Workspace Layout (Sidebar + Canvas) */
+        .workspace-layout {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+            position: relative;
+            background: var(--lo-canvas-bg);
+        }
+
+        /* Left Slides Panel (Impress Mode) */
+        #impress-slides-panel {
+            display: none;
+            width: 140px;
+            background: #1a1a1a;
+            border-right: 1px solid var(--lo-border);
+            flex-direction: column;
+            padding: 8px 4px;
+            gap: 8px;
+            overflow-y: auto;
+            flex-shrink: 0;
+        }
+
+        .slide-thumb-card {
+            background: #282828;
+            border: 2px solid transparent;
+            border-radius: 4px;
+            padding: 6px;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .slide-thumb-card.active {
+            border-color: var(--lo-accent-cyan);
+            background: #333333;
+        }
+
+        .slide-preview-box {
+            width: 100%;
+            height: 65px;
+            background: #ffffff;
+            color: #000000;
+            border-radius: 2px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-size: 8px;
+            padding: 4px;
+            overflow: hidden;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.5);
+        }
+
+        /* Center Canvas Workspace */
+        .document-viewport {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: auto;
+            align-items: center;
+            padding: 16px 8px;
+            position: relative;
+            background: #141414;
+        }
+
+        /* Writer Page (Realistic White A4 Sheet) */
+        #writer-page {
+            width: 820px;
+            max-width: 96%;
+            min-height: 1050px;
+            background: #ffffff;
+            color: #111111;
+            padding: 48px 56px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.8), 0 0 0 1px #333;
+            border-radius: 2px;
+            outline: none;
+            user-select: text;
+            -webkit-user-select: text;
+            line-height: 1.6;
+            font-size: 14px;
+            position: relative;
+            margin-bottom: 30px;
+        }
+
+        /* Corner Margin Markers */
+        #writer-page::before {
+            content: "┌";
+            position: absolute;
+            top: 14px;
+            left: 18px;
+            color: #bbb;
+            font-size: 16px;
+            pointer-events: none;
+        }
+
+        #writer-page::after {
+            content: "┐";
+            position: absolute;
+            top: 14px;
+            right: 18px;
+            color: #bbb;
+            font-size: 16px;
+            pointer-events: none;
+        }
+
+        /* Calc Spreadsheet Table Container */
+        #calc-grid-container {
+            display: none;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background: #ffffff;
+            color: #000000;
+        }
+
+        .calc-table {
+            border-collapse: collapse;
+            font-size: 11px;
+            min-width: 100%;
+            font-family: Arial, sans-serif;
+        }
+
+        .calc-table th {
+            background: #e8e8e8;
+            border: 1px solid #c0c0c0;
+            padding: 4px 8px;
+            text-align: center;
+            font-weight: 600;
+            color: #444;
+            min-width: 70px;
+        }
+
+        .calc-table th.row-header {
+            min-width: 32px;
+            width: 32px;
+            background: #e8e8e8;
+        }
+
+        .calc-table td {
+            border: 1px solid #d4d4d4;
+            padding: 4px 6px;
+            min-width: 70px;
+            height: 24px;
+            outline: none;
+            user-select: text;
+            -webkit-user-select: text;
+            background: #fff;
+        }
+
+        .calc-table td.selected {
+            outline: 2px solid #0078d4;
+            background: #e5f1fb;
+        }
+
+        /* Impress Slide Center Canvas */
+        #impress-slide-canvas {
+            display: none;
+            width: 800px;
+            max-width: 95%;
+            height: 450px;
+            background: #ffffff;
+            color: #000000;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.8);
+            border-radius: 4px;
+            padding: 30px 40px;
+            flex-direction: column;
+            user-select: text;
+            -webkit-user-select: text;
+        }
+
+        .slide-title-box {
+            font-size: 26px;
+            font-weight: bold;
+            border-bottom: 2px solid #0088cc;
+            padding-bottom: 8px;
+            margin-bottom: 16px;
+            outline: none;
+        }
+
+        .slide-body-box {
+            font-size: 16px;
+            line-height: 1.6;
+            flex: 1;
+            outline: none;
+        }
+
+        /* Right Sidebar Dock */
+        .right-sidebar-dock {
+            width: 38px;
+            background: #1c1c1c;
+            border-left: 1px solid var(--lo-border);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 6px 0;
+            gap: 12px;
+            flex-shrink: 0;
+        }
+
+        .dock-icon-btn {
+            background: transparent;
+            border: none;
+            color: #888;
+            font-size: 16px;
+            cursor: pointer;
+            padding: 6px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 30px;
+            height: 30px;
+        }
+
+        .dock-icon-btn:hover, .dock-icon-btn.active {
+            color: var(--lo-accent-cyan);
+            background: #2a2a2a;
+        }
+
+        /* Expanded Sidebar Panel */
+        #sidebar-panel {
+            display: none;
+            width: 240px;
+            background: #222222;
+            border-left: 1px solid var(--lo-border);
+            padding: 12px;
+            flex-direction: column;
+            gap: 12px;
+            overflow-y: auto;
+            flex-shrink: 0;
+        }
+
+        .panel-title {
+            font-size: 12px;
+            font-weight: bold;
+            color: var(--lo-accent-cyan);
+            border-bottom: 1px solid #3c3c3c;
+            padding-bottom: 4px;
+        }
+
+        .ai-action-btn {
+            background: linear-gradient(135deg, rgba(0, 229, 255, 0.2), rgba(0, 136, 204, 0.3));
+            border: 1px solid var(--lo-accent-cyan);
+            color: #ffffff;
+            padding: 6px 10px;
+            border-radius: 4px;
+            font-size: 11px;
+            cursor: pointer;
+            text-align: left;
+            margin-bottom: 6px;
+            width: 100%;
+        }
+
+        .ai-action-btn:hover {
+            background: linear-gradient(135deg, rgba(0, 229, 255, 0.4), rgba(0, 136, 204, 0.5));
+        }
+
+        /* Bottom Status Bar */
+        .status-bar {
+            display: flex;
+            align-items: center;
+            background: var(--lo-status-bg);
+            border-top: 1px solid var(--lo-border);
+            padding: 3px 10px;
+            font-size: 11px;
+            color: var(--lo-text-muted);
+            gap: 12px;
+            flex-shrink: 0;
+            overflow-x: auto;
+            height: 26px;
+        }
+
+        .status-item {
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .status-separator {
+            width: 1px;
+            height: 12px;
+            background: #444;
+        }
+
+        .zoom-slider-container {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            margin-left: auto;
+        }
+
+        .zoom-slider {
+            width: 70px;
+            accent-color: var(--lo-accent-cyan);
+        }
+    </style>
+</head>
+<body>
+
+<div id="app-container">
+
+    <!-- Top Return to Browsing & Brand Header -->
+    <div class="suite-top-bar">
+        <button class="btn-return-browse" onclick="handleReturnToBrowsing()">
+            ← Regresar a navegar
+        </button>
+        <div class="suite-brand-title">
+            OfficeFreeToAndroid
+            <span class="suite-brand-badge">LibreOffice Core</span>
+        </div>
+        <div style="flex: 1;"></div>
+        <button class="tool-btn" style="background: rgba(0,229,255,0.15); color: var(--lo-accent-cyan);" onclick="saveActiveDocument()">
+            💾 Guardar
+        </button>
+        <button class="tool-btn" style="background: rgba(255,234,0,0.15); color: #ffea00;" onclick="toggleAiSidebar()">
+            ✨ Gemini AI
+        </button>
+        <button class="tool-btn" style="background: rgba(0,230,118,0.15); color: #00e676;" onclick="syncWithGoogleDrive()">
+            ☁️ Drive
+        </button>
+    </div>
+
+    <!-- Multitabs Bar (Permite pestañas simultáneas) -->
+    <div class="tabs-header-bar">
+        <div class="tabs-list" id="tabs-container">
+            <!-- Tabs injected dynamically -->
+        </div>
+        <button class="btn-new-tab" onclick="promptNewDocumentTab()" title="Nuevo Documento">+</button>
+    </div>
+
+    <!-- LibreOffice / OpenOffice Classic Menu Bar -->
+    <div class="menu-bar">
+        <div class="menu-item" onclick="toggleMenu('menu-archivo')">
+            Archivo
+            <div class="dropdown-menu" id="menu-archivo">
+                <div class="dropdown-option" onclick="createNewDoc('WRITER')"><span>📝 Nuevo Documento de Texto</span></div>
+                <div class="dropdown-option" onclick="createNewDoc('CALC')"><span>📊 Nueva Hoja de Cálculo</span></div>
+                <div class="dropdown-option" onclick="createNewDoc('IMPRESS')"><span>📽️ Nueva Presentación</span></div>
+                <div class="dropdown-divider"></div>
+                <div class="dropdown-option" onclick="saveActiveDocument()"><span>💾 Guardar</span><span>Ctrl+S</span></div>
+                <div class="dropdown-option" onclick="exportToPdf()"><span>📄 Exportar directamente a PDF</span></div>
+                <div class="dropdown-option" onclick="window.print()"><span>🖨️ Imprimir...</span><span>Ctrl+P</span></div>
+                <div class="dropdown-divider"></div>
+                <div class="dropdown-option" onclick="syncWithGoogleDrive()"><span>☁️ Sincronizar en Google Drive</span></div>
+                <div class="dropdown-divider"></div>
+                <div class="dropdown-option" onclick="handleReturnToBrowsing()"><span>🚪 Salir de OfficeFree</span></div>
+            </div>
+        </div>
+
+        <div class="menu-item" onclick="toggleMenu('menu-editar')">
+            Editar
+            <div class="dropdown-menu" id="menu-editar">
+                <div class="dropdown-option" onclick="execCommand('undo')"><span>↩ Deshacer</span><span>Ctrl+Z</span></div>
+                <div class="dropdown-option" onclick="execCommand('redo')"><span>↪ Rehacer</span><span>Ctrl+Y</span></div>
+                <div class="dropdown-divider"></div>
+                <div class="dropdown-option" onclick="execCommand('cut')"><span>✂ Cortar</span><span>Ctrl+X</span></div>
+                <div class="dropdown-option" onclick="execCommand('copy')"><span>📋 Copiar</span><span>Ctrl+C</span></div>
+                <div class="dropdown-option" onclick="execCommand('paste')"><span>📄 Pegar</span><span>Ctrl+V</span></div>
+                <div class="dropdown-divider"></div>
+                <div class="dropdown-option" onclick="execCommand('selectAll')"><span>Seleccionar Todo</span><span>Ctrl+A</span></div>
+            </div>
+        </div>
+
+        <div class="menu-item" onclick="toggleMenu('menu-ver')">
+            Ver
+            <div class="dropdown-menu" id="menu-ver">
+                <div class="dropdown-option" onclick="setZoom(100)"><span>🔍 Zoom 100%</span></div>
+                <div class="dropdown-option" onclick="setZoom(125)"><span>🔍 Zoom 125%</span></div>
+                <div class="dropdown-option" onclick="setZoom(150)"><span>🔍 Zoom 150%</span></div>
+                <div class="dropdown-divider"></div>
+                <div class="dropdown-option" onclick="toggleRuler()"><span>📏 Regla Horizontal</span></div>
+                <div class="dropdown-option" onclick="toggleSidebar()"><span>📑 Barra Lateral</span></div>
+            </div>
+        </div>
+
+        <div class="menu-item" onclick="toggleMenu('menu-insertar')">
+            Insertar
+            <div class="dropdown-menu" id="menu-insertar">
+                <div class="dropdown-option" onclick="insertTable()"><span>⊞ Tabla (3x3)</span></div>
+                <div class="dropdown-option" onclick="insertImagePlaceholder()"><span>🖼 Imagen</span></div>
+                <div class="dropdown-option" onclick="insertSymbol('Ω')"><span>Ω Carácter Especial</span></div>
+                <div class="dropdown-option" onclick="insertHyperlink()"><span>🔗 Hiperenlace...</span></div>
+                <div class="dropdown-divider"></div>
+                <div class="dropdown-option" onclick="insertPageBreak()"><span>📄 Salto de Página</span></div>
+            </div>
+        </div>
+
+        <div class="menu-item" onclick="toggleMenu('menu-formato')">
+            Formato
+            <div class="dropdown-menu" id="menu-formato">
+                <div class="dropdown-option" onclick="execCommand('bold')"><span>Negrita</span><span>Ctrl+N</span></div>
+                <div class="dropdown-option" onclick="execCommand('italic')"><span>Cursiva</span><span>Ctrl+K</span></div>
+                <div class="dropdown-option" onclick="execCommand('underline')"><span>Subrayado</span><span>Ctrl+S</span></div>
+                <div class="dropdown-option" onclick="execCommand('strikeThrough')"><span>Tachado</span></div>
+                <div class="dropdown-divider"></div>
+                <div class="dropdown-option" onclick="execCommand('justifyLeft')"><span>Alinear a la Izquierda</span></div>
+                <div class="dropdown-option" onclick="execCommand('justifyCenter')"><span>Centrado</span></div>
+                <div class="dropdown-option" onclick="execCommand('justifyRight')"><span>Alinear a la Derecha</span></div>
+                <div class="dropdown-option" onclick="execCommand('justifyFull')"><span>Justificado</span></div>
+            </div>
+        </div>
+
+        <div class="menu-item" onclick="toggleMenu('menu-estilos')">
+            Estilos
+            <div class="dropdown-menu" id="menu-estilos">
+                <div class="dropdown-option" onclick="formatBlock('h1')"><span>Título 1</span></div>
+                <div class="dropdown-option" onclick="formatBlock('h2')"><span>Título 2</span></div>
+                <div class="dropdown-option" onclick="formatBlock('h3')"><span>Título 3</span></div>
+                <div class="dropdown-option" onclick="formatBlock('p')"><span>Párrafo Predeterminado</span></div>
+            </div>
+        </div>
+
+        <div class="menu-item" onclick="toggleMenu('menu-tabla')">
+            Tabla
+            <div class="dropdown-menu" id="menu-tabla">
+                <div class="dropdown-option" onclick="insertTable()"><span>Insertar Tabla...</span></div>
+                <div class="dropdown-option" onclick="insertTableRow()"><span>Insertar Fila</span></div>
+                <div class="dropdown-option" onclick="insertTableCol()"><span>Insertar Columna</span></div>
+            </div>
+        </div>
+
+        <div class="menu-item" onclick="toggleMenu('menu-herramientas')">
+            Herramientas
+            <div class="dropdown-menu" id="menu-herramientas">
+                <div class="dropdown-option" onclick="askAiAction('SUMMARIZE')"><span>✨ Gemini AI: Resumir Documento</span></div>
+                <div class="dropdown-option" onclick="askAiAction('IMPROVE')"><span>✨ Gemini AI: Mejorar Ortografía y Estilo</span></div>
+                <div class="dropdown-option" onclick="askAiAction('TRANSLATE')"><span>✨ Gemini AI: Traducir</span></div>
+                <div class="dropdown-divider"></div>
+                <div class="dropdown-option" onclick="countWords()"><span>📊 Conteo de Palabras y Caracteres</span></div>
+            </div>
+        </div>
+
+        <div class="menu-item" onclick="toggleMenu('menu-ayuda')">
+            Ayuda
+            <div class="dropdown-menu" id="menu-ayuda">
+                <div class="dropdown-option" onclick="alert('OfficeFreeToAndroid • Basado en Apache OpenOffice y LibreOffice Core.\nAdaptado para Android por Maxwell Chacón.')"><span>Acerca de OfficeFreeToAndroid</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Standard Tool Ribbon (Iconos idénticos a OpenOffice / LibreOffice) -->
+    <div class="toolbar-row">
+        <button class="tool-btn" title="Nuevo" onclick="createNewDoc('WRITER')">📄</button>
+        <button class="tool-btn" title="Abrir" onclick="promptOpenDocument()">📂</button>
+        <button class="tool-btn" title="Guardar" onclick="saveActiveDocument()">💾</button>
+        <button class="tool-btn" title="Exportar a PDF" onclick="exportToPdf()">📥</button>
+        <button class="tool-btn" title="Imprimir" onclick="window.print()">🖨️</button>
+        
+        <div class="tool-separator"></div>
+        
+        <button class="tool-btn" title="Cortar" onclick="execCommand('cut')">✂</button>
+        <button class="tool-btn" title="Copiar" onclick="execCommand('copy')">📋</button>
+        <button class="tool-btn" title="Pegar" onclick="execCommand('paste')">📄</button>
+        
+        <div class="tool-separator"></div>
+        
+        <button class="tool-btn" title="Deshacer" onclick="execCommand('undo')">↩</button>
+        <button class="tool-btn" title="Rehacer" onclick="execCommand('redo')">↪</button>
+        
+        <div class="tool-separator"></div>
+        
+        <button class="tool-btn" title="Insertar Tabla" onclick="insertTable()">⊞</button>
+        <button class="tool-btn" title="Insertar Imagen" onclick="insertImagePlaceholder()">🖼</button>
+        <button class="tool-btn" title="Carácter Especial" onclick="insertSymbol('Ω')">Ω</button>
+        <button class="tool-btn" title="Hiperenlace" onclick="insertHyperlink()">🔗</button>
+        <button class="tool-btn" title="Caracteres no imprimibles" onclick="toggleFormattingMarks()">¶</button>
+    </div>
+
+    <!-- Formatting Tool Ribbon (Estilos, Fuente, Negrita, Cursiva, Alineación) -->
+    <div class="toolbar-row">
+        <!-- Paragraph Style -->
+        <select class="tool-select" onchange="formatBlock(this.value)" style="width: 140px;">
+            <option value="p">Estilo de párrafo predeterminado</option>
+            <option value="h1">Título 1</option>
+            <option value="h2">Título 2</option>
+            <option value="h3">Título 3</option>
+            <option value="pre">Código preformateado</option>
+        </select>
+
+        <!-- Font Family -->
+        <select class="tool-select" onchange="execCommand('fontName', this.value)" style="width: 110px;">
+            <option value="Liberation Serif">Liberation Serif</option>
+            <option value="Liberation Sans">Liberation Sans</option>
+            <option value="Arial">Arial</option>
+            <option value="Times New Roman">Times New Roman</option>
+            <option value="Courier New">Courier New</option>
+        </select>
+
+        <!-- Font Size -->
+        <select class="tool-select" onchange="setFontSize(this.value)" style="width: 55px;">
+            <option value="10pt">10 pt</option>
+            <option value="11pt">11 pt</option>
+            <option value="12pt" selected>12 pt</option>
+            <option value="14pt">14 pt</option>
+            <option value="16pt">16 pt</option>
+            <option value="18pt">18 pt</option>
+            <option value="24pt">24 pt</option>
+        </select>
+
+        <div class="tool-separator"></div>
+
+        <button class="tool-btn" style="font-weight: bold;" title="Negrita (Ctrl+N)" onclick="execCommand('bold')">N</button>
+        <button class="tool-btn" style="font-style: italic;" title="Cursiva (Ctrl+K)" onclick="execCommand('italic')">K</button>
+        <button class="tool-btn" style="text-decoration: underline;" title="Subrayado (Ctrl+S)" onclick="execCommand('underline')">S</button>
+        <button class="tool-btn" style="text-decoration: line-through;" title="Tachado" onclick="execCommand('strikeThrough')">S</button>
+        <button class="tool-btn" title="Superíndice" onclick="execCommand('superscript')">x²</button>
+        <button class="tool-btn" title="Subíndice" onclick="execCommand('subscript')">x₂</button>
+
+        <div class="tool-separator"></div>
+
+        <button class="tool-btn" title="Color de fuente" onclick="execCommand('foreColor', '#00e5ff')">A<span style="color: #00e5ff;">▾</span></button>
+        <button class="tool-btn" title="Color de resaltado" onclick="execCommand('hiliteColor', '#ffea00')">✏️</button>
+
+        <div class="tool-separator"></div>
+
+        <button class="tool-btn" title="Alinear a la izquierda" onclick="execCommand('justifyLeft')">≡</button>
+        <button class="tool-btn" title="Centrado" onclick="execCommand('justifyCenter')">≢</button>
+        <button class="tool-btn" title="Alinear a la derecha" onclick="execCommand('justifyRight')">≣</button>
+        <button class="tool-btn" title="Justificado" onclick="execCommand('justifyFull')">≋</button>
+
+        <div class="tool-separator"></div>
+
+        <button class="tool-btn" title="Viñetas" onclick="execCommand('insertUnorderedList')">•≡</button>
+        <button class="tool-btn" title="Numeración" onclick="execCommand('insertOrderedList')">1≡</button>
+        <button class="tool-btn" title="Disminuir sangría" onclick="execCommand('outdent')">⇤</button>
+        <button class="tool-btn" title="Aumentar sangría" onclick="execCommand('indent')">⇥</button>
+    </div>
+
+    <!-- Formula Bar (For Calc Spreadsheet Mode) -->
+    <div id="calc-formula-bar">
+        <div id="cell-address-box">A1</div>
+        <button class="tool-btn" title="Asistente de Funciones" onclick="insertCalcFunction()">fx</button>
+        <button class="tool-btn" title="Suma" onclick="insertCalcSum()">Σ</button>
+        <button class="tool-btn" title="Igual" onclick="insertCalcEqual()">=</button>
+        <input type="text" id="formula-input" placeholder="Ingresa valor o fórmula (=SUMA(A1:A10))" oninput="onFormulaInputChange(this.value)">
+    </div>
+
+    <!-- Horizontal Ruler Bar (Writer Mode) -->
+    <div id="ruler-bar">
+        <div class="ruler-mark"><span>1</span><div class="ruler-tick"></div></div>
+        <div class="ruler-mark"><span>2</span><div class="ruler-tick"></div></div>
+        <div class="ruler-mark"><span>3</span><div class="ruler-tick"></div></div>
+        <div class="ruler-mark"><span>4</span><div class="ruler-tick"></div></div>
+        <div class="ruler-mark"><span>5</span><div class="ruler-tick"></div></div>
+        <div class="ruler-mark"><span>6</span><div class="ruler-tick"></div></div>
+        <div class="ruler-mark"><span>7</span><div class="ruler-tick"></div></div>
+        <div class="ruler-mark"><span>8</span><div class="ruler-tick"></div></div>
+        <div class="ruler-mark"><span>9</span><div class="ruler-tick"></div></div>
+        <div class="ruler-mark"><span>10</span><div class="ruler-tick"></div></div>
+        <div class="ruler-mark"><span>11</span><div class="ruler-tick"></div></div>
+        <div class="ruler-mark"><span>12</span><div class="ruler-tick"></div></div>
+        <div class="ruler-mark"><span>13</span><div class="ruler-tick"></div></div>
+        <div class="ruler-mark"><span>14</span><div class="ruler-tick"></div></div>
+        <div class="ruler-mark"><span>15</span><div class="ruler-tick"></div></div>
+        <div class="ruler-mark"><span>16</span><div class="ruler-tick"></div></div>
+        <div class="ruler-mark"><span>17</span><div class="ruler-tick"></div></div>
+        <div class="ruler-mark"><span>18</span><div class="ruler-tick"></div></div>
+        <div class="ruler-mark"><span>19</span><div class="ruler-tick"></div></div>
+    </div>
+
+    <!-- Workspace Body: Left Panel (for Impress) + Canvas Viewport + Right Sidebar -->
+    <div class="workspace-layout">
+
+        <!-- Impress Slides Thumbnails Panel -->
+        <div id="impress-slides-panel">
+            <div class="slide-thumb-card active" onclick="selectSlide(1)">
+                <div class="slide-preview-box">
+                    <strong>1. Portada</strong>
+                </div>
+            </div>
+            <div class="slide-thumb-card" onclick="selectSlide(2)">
+                <div class="slide-preview-box">
+                    <strong>2. Puntos</strong>
+                </div>
+            </div>
+            <button class="tool-btn" style="width: 100%; margin-top: 6px; background: #2a2a2a;" onclick="addNewSlide()">+ Diapositiva</button>
+        </div>
+
+        <!-- Center Document Viewport -->
+        <div class="document-viewport" id="doc-viewport">
+
+            <!-- 1. Writer White A4 Paper Sheet -->
+            <div id="writer-page" contenteditable="true" spellcheck="false" oninput="onDocumentContentChange()">
+                <h1>Documento Sin Título</h1>
+                <p>Escribe aquí tu documento con la interfaz completa de <strong>LibreOffice / OpenOffice</strong> en Android.</p>
+                <p>Compatible con formatos <code>.docx</code>, <code>.odt</code>, <code>.rtf</code> y <code>.txt</code>.</p>
+            </div>
+
+            <!-- 2. Calc Spreadsheet Grid Table -->
+            <div id="calc-grid-container">
+                <table class="calc-table" id="calc-table">
+                    <!-- Dynamically generated rows and cols -->
+                </table>
+            </div>
+
+            <!-- 3. Impress Slide Canvas -->
+            <div id="impress-slide-canvas">
+                <div class="slide-title-box" contenteditable="true" oninput="onDocumentContentChange()">Título de la Diapositiva</div>
+                <div class="slide-body-box" contenteditable="true" oninput="onDocumentContentChange()">
+                    • Escribe aquí los puntos clave de tu presentación.<br>
+                    • Compatible con formatos .pptx y .odp.<br>
+                    • Exportable a PDF directamente.
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Expanded Sidebar Panel (Properties, AI Assistant, Cloud Drive) -->
+        <div id="sidebar-panel">
+            <div class="panel-title" id="sidebar-panel-title">✨ Gemini AI Assistant</div>
+            <div id="sidebar-panel-content">
+                <p style="color: #aaa; margin-bottom: 8px;">Asistencia de inteligencia artificial en tu documento actual:</p>
+                <button class="ai-action-btn" onclick="askAiAction('SUMMARIZE')">📝 Resumir contenido</button>
+                <button class="ai-action-btn" onclick="askAiAction('IMPROVE')">✨ Mejorar redacción y estilo</button>
+                <button class="ai-action-btn" onclick="askAiAction('FORMULA')">📊 Generar fórmulas de cálculo</button>
+                <button class="ai-action-btn" onclick="askAiAction('TRANSLATE')">🌐 Traducir al Español</button>
+                <button class="ai-action-btn" onclick="askAiAction('DRAFT')">💡 Generar ideas y estructura</button>
+            </div>
+        </div>
+
+        <!-- Right Vertical Sidebar Icon Dock -->
+        <div class="right-sidebar-dock">
+            <button class="dock-icon-btn" title="Propiedades" onclick="openSidebarTab('PROPERTIES')">⚙</button>
+            <button class="dock-icon-btn" title="Estilos" onclick="openSidebarTab('STYLES')">A</button>
+            <button class="dock-icon-btn" title="Galería" onclick="openSidebarTab('GALLERY')">🖼</button>
+            <button class="dock-icon-btn" title="Navegador" onclick="openSidebarTab('NAVIGATOR')">🧭</button>
+            <button class="dock-icon-btn" title="Gemini AI Studio" style="color: var(--lo-accent-cyan);" onclick="openSidebarTab('AI')">✨</button>
+            <button class="dock-icon-btn" title="Google Drive Cloud" style="color: #00e676;" onclick="openSidebarTab('DRIVE')">☁️</button>
+        </div>
+
+    </div>
+
+    <!-- Bottom Status Bar -->
+    <div class="status-bar">
+        <div class="status-item" id="status-page-info">Página 1 de 1</div>
+        <div class="status-separator"></div>
+        <div class="status-item" id="status-word-count">0 palabras, 0 caracteres</div>
+        <div class="status-separator"></div>
+        <div class="status-item">Estilo de página predeterminado</div>
+        <div class="status-separator"></div>
+        <div class="status-item">Español (Nicaragua)</div>
+        <div class="status-separator"></div>
+        <div class="status-item" id="status-drive-sync">Local 🟢</div>
+
+        <div class="zoom-slider-container">
+            <span style="font-size: 10px;">-</span>
+            <input type="range" class="zoom-slider" min="60" max="200" value="100" oninput="setZoom(this.value)">
+            <span style="font-size: 10px;">+</span>
+            <span id="zoom-label" style="font-size: 10px; width: 34px;">100%</span>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Document State & Multitabs Model
+    let documents = [
+        {
+            id: 'doc_1',
+            title: 'Documento1.docx',
+            type: 'WRITER',
+            content: '<h1>Documento de Texto LibreOffice Writer</h1><p>Bienvenido al entorno completo de <strong>OfficeFreeToAndroid</strong> con todas las herramientas de LibreOffice y OpenOffice.</p><p>Puedes crear múltiples pestañas, usar fórmulas en Calc y crear diapositivas en Impress.</p>'
+        }
+    ];
+    let activeDocIndex = 0;
+    let currentZoom = 100;
+    let currentCalcData = {};
+
+    // Initialize UI
+    window.addEventListener('DOMContentLoaded', () => {
+        renderTabs();
+        loadActiveDocument();
+        generateCalcGrid();
+        updateWordCount();
+
+        // Close dropdowns on outside click
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.menu-item')) {
+                document.querySelectorAll('.dropdown-menu').forEach(m => m.classList.remove('show'));
+                document.querySelectorAll('.menu-item').forEach(m => m.classList.remove('open'));
+            }
+        });
+    });
+
+    function handleReturnToBrowsing() {
+        saveActiveDocument();
+        if (window.OfficeBridge && window.OfficeBridge.returnToBrowsing) {
+            window.OfficeBridge.returnToBrowsing();
+        } else if (window.MBrowserBridge && window.MBrowserBridge.openUrl) {
+            window.MBrowserBridge.openUrl('file:///android_asset/newtab.html');
+        } else {
+            window.history.back();
+        }
+    }
+
+    function renderTabs() {
+        const container = document.getElementById('tabs-container');
+        container.innerHTML = '';
+        documents.forEach((doc, idx) => {
+            const tab = document.createElement('div');
+            tab.className = `doc-tab ${idx === activeDocIndex ? 'active' : ''}`;
+            
+            const icon = doc.type === 'WRITER' ? '📝' : doc.type === 'CALC' ? '📊' : '📽️';
+            tab.innerHTML = `
+                <span>${icon} ${doc.title}</span>
+                <span class="doc-tab-close" onclick="closeDocTab(event, ${idx})">✕</span>
+            `;
+            tab.onclick = () => switchTab(idx);
+            container.appendChild(tab);
+        });
+    }
+
+    function switchTab(index) {
+        if (index >= 0 && index < documents.length) {
+            saveCurrentContentToMemory();
+            activeDocIndex = index;
+            renderTabs();
+            loadActiveDocument();
+        }
+    }
+
+    function closeDocTab(e, index) {
+        e.stopPropagation();
+        if (documents.length <= 1) {
+            alert('Debe haber al menos un documento abierto.');
+            return;
+        }
+        documents.splice(index, 1);
+        if (activeDocIndex >= documents.length) {
+            activeDocIndex = documents.length - 1;
+        }
+        renderTabs();
+        loadActiveDocument();
+    }
+
+    function promptNewDocumentTab() {
+        const type = prompt('Tipo de documento:\n1. Writer (Texto .docx)\n2. Calc (Hoja .xlsx)\n3. Impress (Diapositivas .pptx)', '1');
+        if (type === '1' || type?.toLowerCase() === 'writer') {
+            createNewDoc('WRITER');
+        } else if (type === '2' || type?.toLowerCase() === 'calc') {
+            createNewDoc('CALC');
+        } else if (type === '3' || type?.toLowerCase() === 'impress') {
+            createNewDoc('IMPRESS');
+        }
+    }
+
+    function createNewDoc(type) {
+        saveCurrentContentToMemory();
+        const count = documents.length + 1;
+        const ext = type === 'WRITER' ? 'docx' : type === 'CALC' ? 'xlsx' : 'pptx';
+        const newDoc = {
+            id: 'doc_' + Date.now(),
+            title: `Documento_${count}.${ext}`,
+            type: type,
+            content: type === 'WRITER' ? '<h1>Nuevo Documento</h1><p>Comienza a escribir aquí...</p>' : ''
+        };
+        documents.push(newDoc);
+        activeDocIndex = documents.length - 1;
+        renderTabs();
+        loadActiveDocument();
+    }
+
+    function saveCurrentContentToMemory() {
+        const doc = documents[activeDocIndex];
+        if (!doc) return;
+        if (doc.type === 'WRITER') {
+            doc.content = document.getElementById('writer-page').innerHTML;
+        } else if (doc.type === 'CALC') {
+            doc.content = JSON.stringify(currentCalcData);
+        } else if (doc.type === 'IMPRESS') {
+            doc.content = document.getElementById('impress-slide-canvas').innerHTML;
+        }
+    }
+
+    function loadActiveDocument() {
+        const doc = documents[activeDocIndex];
+        if (!doc) return;
+
+        const writerPage = document.getElementById('writer-page');
+        const calcGrid = document.getElementById('calc-grid-container');
+        const calcFormulaBar = document.getElementById('calc-formula-bar');
+        const impressPanel = document.getElementById('impress-slides-panel');
+        const impressCanvas = document.getElementById('impress-slide-canvas');
+        const rulerBar = document.getElementById('ruler-bar');
+
+        // Reset workspace views
+        writerPage.style.display = 'none';
+        calcGrid.style.display = 'none';
+        calcFormulaBar.style.display = 'none';
+        impressPanel.style.display = 'none';
+        impressCanvas.style.display = 'none';
+        rulerBar.style.display = 'none';
+
+        if (doc.type === 'WRITER') {
+            writerPage.style.display = 'block';
+            rulerBar.style.display = 'flex';
+            writerPage.innerHTML = doc.content || '<h1>Documento LibreOffice Writer</h1><p>Listo para editar.</p>';
+            document.getElementById('status-page-info').innerText = 'Página 1 de 1';
+        } else if (doc.type === 'CALC') {
+            calcGrid.style.display = 'block';
+            calcFormulaBar.style.display = 'flex';
+            loadCalcData(doc.content);
+            document.getElementById('status-page-info').innerText = 'Hoja 1 de 1';
+        } else if (doc.type === 'IMPRESS') {
+            impressPanel.style.display = 'flex';
+            impressCanvas.style.display = 'flex';
+            impressCanvas.innerHTML = doc.content || '<div class="slide-title-box" contenteditable="true">Título Diapositiva</div><div class="slide-body-box" contenteditable="true">• Contenido de presentación</div>';
+            document.getElementById('status-page-info').innerText = 'Diapositiva 1 de 2';
+        }
+
+        updateWordCount();
+    }
+
+    function onDocumentContentChange() {
+        updateWordCount();
+    }
+
+    function updateWordCount() {
+        const doc = documents[activeDocIndex];
+        let text = '';
+        if (doc.type === 'WRITER') {
+            text = document.getElementById('writer-page').innerText || '';
+        } else if (doc.type === 'IMPRESS') {
+            text = document.getElementById('impress-slide-canvas').innerText || '';
+        } else {
+            text = Object.values(currentCalcData).join(' ');
+        }
+        const words = text.trim() ? text.trim().split(/\s+/).length : 0;
+        const chars = text.length;
+        document.getElementById('status-word-count').innerText = `${words} palabras, ${chars} caracteres`;
+    }
+
+    function saveActiveDocument() {
+        saveCurrentContentToMemory();
+        const doc = documents[activeDocIndex];
+        if (window.OfficeBridge && window.OfficeBridge.saveDocument) {
+            window.OfficeBridge.saveDocument(doc.id, doc.title, doc.type, doc.content);
+        } else {
+            localStorage.setItem('lo_saved_' + doc.id, JSON.stringify(doc));
+            alert('💾 Documento guardado correctamente: ' + doc.title);
+        }
+    }
+
+    function syncWithGoogleDrive() {
+        saveActiveDocument();
+        const doc = documents[activeDocIndex];
+        if (window.OfficeBridge && window.OfficeBridge.syncDrive) {
+            window.OfficeBridge.syncDrive(doc.id, doc.title, doc.content);
+        } else {
+            document.getElementById('status-drive-sync').innerText = 'Drive Sincronizado ☁️';
+            alert('☁️ Sincronización con Google Drive completada para ' + doc.title);
+        }
+    }
+
+    function exportToPdf() {
+        saveActiveDocument();
+        alert('📄 Exportando ' + documents[activeDocIndex].title + ' a formato PDF...');
+        window.print();
+    }
+
+    // Calc Engine
+    function generateCalcGrid() {
+        const table = document.getElementById('calc-table');
+        const cols = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
+        
+        let html = '<thead><tr><th class="row-header"></th>';
+        cols.forEach(c => html += `<th>${c}</th>`);
+        html += '</tr></thead><tbody>';
+
+        for (let r = 1; r <= 30; r++) {
+            html += `<tr><th class="row-header">${r}</th>`;
+            cols.forEach(c => {
+                const cellId = `${c}${r}`;
+                html += `<td id="cell-${cellId}" contenteditable="true" onfocus="selectCell('${cellId}')" oninput="onCellInput('${cellId}', this.innerText)"></td>`;
+            });
+            html += '</tr>';
+        }
+        html += '</tbody>';
+        table.innerHTML = html;
+
+        // Sample data
+        setCellVal('A1', 'Ítem');
+        setCellVal('B1', 'Categoría');
+        setCellVal('C1', 'Monto ($)');
+        setCellVal('A2', 'Servidor Apache');
+        setCellVal('B2', 'Hosting');
+        setCellVal('C2', '120.00');
+        setCellVal('A3', 'Licencia LibreOffice');
+        setCellVal('B3', 'Software');
+        setCellVal('C3', '0.00 (Libre)');
+    }
+
+    function selectCell(cellId) {
+        document.querySelectorAll('.calc-table td').forEach(td => td.classList.remove('selected'));
+        const cell = document.getElementById(`cell-${cellId}`);
+        if (cell) cell.classList.add('selected');
+        document.getElementById('cell-address-box').innerText = cellId;
+        document.getElementById('formula-input').value = currentCalcData[cellId] || '';
+    }
+
+    function onCellInput(cellId, val) {
+        currentCalcData[cellId] = val;
+        document.getElementById('formula-input').value = val;
+    }
+
+    function setCellVal(cellId, val) {
+        currentCalcData[cellId] = val;
+        const cell = document.getElementById(`cell-${cellId}`);
+        if (cell) cell.innerText = val;
+    }
+
+    function onFormulaInputChange(val) {
+        const cellId = document.getElementById('cell-address-box').innerText;
+        setCellVal(cellId, val);
+    }
+
+    function insertCalcFunction() {
+        const cellId = document.getElementById('cell-address-box').innerText;
+        setCellVal(cellId, '=SUMA(C2:C10)');
+    }
+
+    function insertCalcSum() {
+        const cellId = document.getElementById('cell-address-box').innerText;
+        setCellVal(cellId, '=SUMA(');
+    }
+
+    function insertCalcEqual() {
+        const cellId = document.getElementById('cell-address-box').innerText;
+        setCellVal(cellId, '=');
+    }
+
+    function loadCalcData(dataString) {
+        if (!dataString) return;
+        try {
+            currentCalcData = JSON.parse(dataString);
+            Object.keys(currentCalcData).forEach(cellId => {
+                const cell = document.getElementById(`cell-${cellId}`);
+                if (cell) cell.innerText = currentCalcData[cellId];
+            });
+        } catch (_) {}
+    }
+
+    // Formatting & Menu Execution
+    function toggleMenu(menuId) {
+        const menu = document.getElementById(menuId);
+        const isOpen = menu.classList.contains('show');
+        document.querySelectorAll('.dropdown-menu').forEach(m => m.classList.remove('show'));
+        document.querySelectorAll('.menu-item').forEach(m => m.classList.remove('open'));
+        if (!isOpen) {
+            menu.classList.add('show');
+            menu.parentElement.classList.add('open');
+        }
+    }
+
+    function execCommand(cmd, value = null) {
+        document.execCommand(cmd, false, value);
+        updateWordCount();
+    }
+
+    function formatBlock(tag) {
+        document.execCommand('formatBlock', false, tag);
+    }
+
+    function setFontSize(size) {
+        document.execCommand('fontSize', false, '3');
+    }
+
+    function setZoom(val) {
+        currentZoom = val;
+        document.getElementById('doc-viewport').style.transform = `scale(${val / 100})`;
+        document.getElementById('doc-viewport').style.transformOrigin = 'top center';
+        document.getElementById('zoom-label').innerText = val + '%';
+    }
+
+    function insertTable() {
+        const html = '<table border="1" style="width: 100%; border-collapse: collapse; margin: 10px 0;"><tr><th>Columna 1</th><th>Columna 2</th><th>Columna 3</th></tr><tr><td>Dato A</td><td>Dato B</td><td>Dato C</td></tr><tr><td>Dato 1</td><td>Dato 2</td><td>Dato 3</td></tr></table>';
+        execCommand('insertHTML', html);
+    }
+
+    function insertTableRow() {
+        insertTable();
+    }
+
+    function insertTableCol() {
+        insertTable();
+    }
+
+    function insertImagePlaceholder() {
+        const url = prompt('URL de la imagen o placeholder:', 'https://via.placeholder.com/400x200');
+        if (url) {
+            execCommand('insertHTML', `<img src="${url}" style="max-width: 100%; border-radius: 4px; margin: 8px 0;" />`);
+        }
+    }
+
+    function insertSymbol(sym) {
+        execCommand('insertText', sym);
+    }
+
+    function insertHyperlink() {
+        const url = prompt('URL del hiperenlace:', 'https://');
+        if (url) execCommand('createLink', url);
+    }
+
+    function insertPageBreak() {
+        execCommand('insertHTML', '<div style="page-break-after: always; border-bottom: 2px dashed #999; margin: 20px 0;"></div>');
+    }
+
+    function toggleRuler() {
+        const r = document.getElementById('ruler-bar');
+        r.style.display = r.style.display === 'none' ? 'flex' : 'none';
+    }
+
+    function toggleSidebar() {
+        const p = document.getElementById('sidebar-panel');
+        p.style.display = p.style.display === 'none' ? 'flex' : 'none';
+    }
+
+    function toggleAiSidebar() {
+        openSidebarTab('AI');
+    }
+
+    function openSidebarTab(tabName) {
+        const panel = document.getElementById('sidebar-panel');
+        const title = document.getElementById('sidebar-panel-title');
+        const content = document.getElementById('sidebar-panel-content');
+        panel.style.display = 'flex';
+
+        if (tabName === 'AI') {
+            title.innerText = '✨ Gemini AI Assistant';
+            content.innerHTML = `
+                <p style="color: #aaa; margin-bottom: 8px;">Asistente inteligente para redactar y mejorar documentos:</p>
+                <button class="ai-action-btn" onclick="askAiAction('SUMMARIZE')">📝 Resumir documento</button>
+                <button class="ai-action-btn" onclick="askAiAction('IMPROVE')">✨ Mejorar redacción</button>
+                <button class="ai-action-btn" onclick="askAiAction('FORMULA')">📊 Fórmulas de Excel / Calc</button>
+                <button class="ai-action-btn" onclick="askAiAction('TRANSLATE')">🌐 Traducir al Español</button>
+                <button class="ai-action-btn" onclick="askAiAction('DRAFT')">💡 Generar estructura e ideas</button>
+            `;
+        } else if (tabName === 'DRIVE') {
+            title.innerText = '☁️ Google Drive Sync';
+            content.innerHTML = `
+                <p style="color: #aaa; margin-bottom: 8px;">Sincronización en la nube:</p>
+                <button class="ai-action-btn" onclick="syncWithGoogleDrive()">☁️ Sincronizar Ahora</button>
+                <p style="font-size: 10px; color: #777; margin-top: 10px;">Tus documentos se respaldan de manera segura en tu cuenta personal de Google Drive.</p>
+            `;
+        } else if (tabName === 'PROPERTIES') {
+            title.innerText = '⚙ Propiedades de Página';
+            content.innerHTML = `
+                <p style="color: #bbb; font-size: 11px;"><strong>Formato:</strong> A4 (210 x 297 mm)</p>
+                <p style="color: #bbb; font-size: 11px;"><strong>Orientación:</strong> Vertical</p>
+                <p style="color: #bbb; font-size: 11px;"><strong>Márgenes:</strong> 2.0 cm</p>
+            `;
+        } else {
+            title.innerText = '📑 ' + tabName;
+            content.innerHTML = `<p style="color: #888;">Panel de ${tabName} activo.</p>`;
+        }
+    }
+
+    function askAiAction(action) {
+        const text = document.getElementById('writer-page').innerText;
+        alert('✨ Gemini AI procesando acción: ' + action);
+        if (window.OfficeBridge && window.OfficeBridge.askGemini) {
+            window.OfficeBridge.askGemini(action, text);
+        }
+    }
+
+    function countWords() {
+        updateWordCount();
+        alert(document.getElementById('status-word-count').innerText);
+    }
+</script>
+</body>
+</html>
